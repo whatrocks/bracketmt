@@ -12,6 +12,10 @@ angular.module('bracketmt', [
     .state('nav.signup', {
       url: '/signup',
       templateUrl: 'app/auth/signup.html'
+    })
+    .state('nav.signin', {
+      url: '/signin',
+      templateUrl: 'app/auth/signin.html'
     });
 
   $urlRouterProvider.otherwise('/nav/signup');
