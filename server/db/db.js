@@ -130,20 +130,6 @@ exports.Match = Match;
 // Original direct SQL strings
 ///////////////////////////////////////////////
 
-// var mysql = require('mysql');
-// var logic = require('./logic');
-
-// var connection = mysql.createConnection({
-//   host: 'localhost',
-//   user: 'root',
-//   password: 'H0Y@',
-//   database: 'tournamelt'
-// });
-
-// connection.connect();
-
-// // Mysql test
-
 // var getUsers = function(callback) {
 //   var queryStr = "select * from users";
 //   connection.query(queryStr, function(err, results){
