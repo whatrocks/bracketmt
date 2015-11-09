@@ -1,0 +1,30 @@
+<div id="create">
+  
+  <h1> Create a Tournament</h1>
+  <form novalidate name="createForm" ng-submit="create()">
+    
+    <md-input-container>
+      <input type="text" name="name" ng-model="tournament.name" placeholder="Tournament name">
+    </md-input-container>
+    
+    <md-input-container>
+      <input type="text" name="shortname" ng-model="tournament.shortname" placeholder="Short-URL name">
+    </md-input-container>
+    
+    <md-select ng-model="tournament.game">
+      <md-option ng-repeat="game in games" value="{{game.name}}">
+        {{game.name}}
+      </md-option>
+    </md-select>
+
+    <md-select ng-model="tournament.type">
+      <md-option ng-repeat="type in types" value="{{type.name}}">
+        {{type.name}}
+      </md-option>
+    </md-select>
+     
+    <md-button class="md-raised md-primary" type="submit">Create</md-button>
+
+  </form>
+
+</div>
