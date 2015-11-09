@@ -10,8 +10,6 @@ module.exports = {
 
     db.User.findOne({where: { email: email}})
     .then(function (user) {
-      user = user.dataValues;
-      console.log("user is now: ", user);
       var token = jwt.encode(user, 'secret');
       res.json({token: token});
     })
