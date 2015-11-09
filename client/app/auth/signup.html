@@ -1,13 +1,25 @@
-<div id="container">
+<div id="signup">
   
   <h1> Signup </h1>
-
   <form novalidate name="signupForm" ng-submit="signup()">
-  
-    <input type="text" name="first" ng-model="user.firstname">
-    <input type="text" name="last" ng-model="user.lastname">
-    <input type="email" name="email" ng-model="user.email">
-    <input type="password" name="password" ng-model="user.password">
+    
+    <md-input-container>
+      <input type="text" name="firstname" ng-model="user.firstname" placeholder="First name">
+    </md-input-container>
+    
+    <md-input-container>
+      <input type="text" name="lastname" ng-model="user.lastname" placeholder="Last name">
+    </md-input-container>
+    
+    <md-input-container>
+      <input type="email" name="email" ng-model="user.email" placeholder="Email">
+    </md-input-container>
+    
+    <md-input-container>
+      <input type="password" name="password" ng-model="user.password" placeholder="Password">
+    </md-input-container>
+    
+    <md-button class="md-raised md-primary" type="submit">Sign Up</md-button>
 
   </form>
 
