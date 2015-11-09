@@ -1,6 +1,6 @@
 var logic = require('./logic');
 var Sequelize = require('sequelize');
-var orm = new Sequelize('tournamelt', 'root', 'H0Y@');
+var orm = new Sequelize('bracketmt', 'root', 'H0Y@');
 var Promise = require('bluebird');
 
 ///////////////////////////////////////////////////////
