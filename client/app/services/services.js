@@ -14,6 +14,7 @@ angular.module('bracketmt.services', [])
   };
 
   var signup = function (user) {
+    console.log("user is: ", user);
     return $http({
       method: 'POST',
       url: 'api/users/signup',
