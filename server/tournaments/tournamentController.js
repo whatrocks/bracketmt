@@ -2,6 +2,30 @@ var db = require('../db/db.js');
 
 module.exports = {
 
+  getShortname: function (req, res, next, shortname) {
+    db.Tournament.findOne( { where : {shortname: shortname}})
+      .then(function (tournament) {
+        if (tournament) {
+          // console.log("!!!!!!!!!!");
+          // console.log(tournament.dataValues.shortname);
+          req.shortname = tournament.dataValues.shortname;
+          next();
+        } else {
+          next(new Error("Couldn't find tournament"));
+        }
+      })
+      .catch(function (error) {
+        next(error);
+      });
+  },
+
+  navToTournament: function (req, res, next) {
+    db.Tournament.findOne({ where : {shortname: req.shortname}, include: [db.Game, db.Status, db.Type]})
+      .then(function (tournament) {
+        res.send(200, tournament);
+    });
+  },
+
   allTournaments: function(req, res, next) {
 
     db.Tournament.findAll({include: [db.Game, db.Status, db.Type]})

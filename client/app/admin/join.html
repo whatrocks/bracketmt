@@ -22,7 +22,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr md-auto-select ng-repeat="tournament in tournaments">
+      <tr md-auto-select ng-click="join(tournament)" ng-repeat="tournament in tournaments">
         <td>{{tournament.name}}</td>
         <td>{{tournament.Game.name}}</td>
         <td>{{tournament.Type.name}}</td>

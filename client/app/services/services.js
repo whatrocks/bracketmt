@@ -19,7 +19,19 @@ angular.module('bracketmt.services', [])
 
   // TODO: Add a join specific tournament ID
 
-  // TODO: Get specific tournament ID
+  // WORK IN PROGRESS
+  var getTournament = function(id) {
+
+    return $http({
+      method: 'GET',
+      url: 'api/tournaments/:id'
+    })
+    .then(function (resp){
+      return resp.data;
+    });
+
+  };
+
 
   var getTournaments = function() {
 
