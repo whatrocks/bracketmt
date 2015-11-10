@@ -2,10 +2,39 @@
   
   <h1> Join a Tournament</h1>
 
-  <md-input-container>
+  <md-data-table-toolbar>
+    <h2 class="md-title">Tournaments</h2>
+  </md-data-table-toolbar>
+  
+<!--   <md-input-container>
     <input type="text" ng-model='filter' aria-label="filter">
-  </md-input-container>
+  </md-input-container> -->
 
+  <md-data-table-container>
+  <table md-data-table md-progress="deferred">
+    <thead md-order="query.order" md-trigger="onOrderChange">
+      <tr>
+        <th name="Tournament" order-by="tournament.name"></th>
+        <th name="Game" order-by="tournament.Game.name"></th>
+        <th name="Type" order-by="touranment.Type.name"></th>
+        <th name="Status" order-by="tournament.Status.name"></th>
+        <th numeric name="Participants" order-by="tournament.OwnerId"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr md-auto-select ng-repeat="tournament in tournaments">
+        <td>{{tournament.name}}</td>
+        <td>{{tournament.Game.name}}</td>
+        <td>{{tournament.Type.name}}</td>
+        <td>{{tournament.Status.name}}</td>
+        <td>{{tournament.OwnerId}}</td>
+      </tr>
+    </tbody>
+  </table>
+</md-data-table-container>
+
+
+<!-- 
   <md-list ng-cloak>
     <md-list-item ng-repeat="tournament in tournaments | filter: filter">
         <h2><b>{{tournament.name}}</b></h2>
@@ -16,5 +45,5 @@
         </form>
     </md-list-item>
   </md-list>
-
+ -->
 </div>

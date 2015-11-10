@@ -4,7 +4,8 @@ angular.module('bracketmt', [
   'bracketmt.admin',
   'bracketmt.tournament',
   'ui.router',
-  'ngMaterial'
+  'ngMaterial',
+  'md.data.table'
 ])
 .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
   $stateProvider
