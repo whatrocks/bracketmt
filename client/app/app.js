@@ -24,6 +24,12 @@ angular.module('bracketmt', [
       controller: 'AuthController',
       authenticate: false
     })
+    .state('nav.join', {
+      url: '/join',
+      templateUrl: 'app/admin/join.html',
+      controller: 'AdminController',
+      authenticate: true
+    })
     .state('nav.create', {
       url: '/create',
       templateUrl: 'app/admin/create.html',
@@ -36,7 +42,7 @@ angular.module('bracketmt', [
       authenticate: false
     });
 
-  $urlRouterProvider.otherwise('/nav/create');
+  $urlRouterProvider.otherwise('/nav/join');
   $httpProvider.interceptors.push('AttachTokens');
 })
 .factory('AttachTokens', function ($window){
