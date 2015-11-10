@@ -7,6 +7,7 @@ angular.module('bracketmt.auth', [])
   $scope.signin = function () {
 
     Auth.email = $scope.user.email;
+    Auth.userId = $scope.user.id;
 
     Auth.signin($scope.user)
       .then(function (token) {
@@ -21,6 +22,7 @@ angular.module('bracketmt.auth', [])
   $scope.signup = function () {
     
     Auth.email = $scope.user.email;
+    Auth.userId = $scope.user.id;
 
     Auth.signup($scope.user)
       .then(function (token) {

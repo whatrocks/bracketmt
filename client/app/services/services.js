@@ -63,6 +63,7 @@ angular.module('bracketmt.services', [])
 .factory('Auth', function($http, $location, $window) {
 
   var email = "";
+  var userId = 0;
 
   var signin = function (user) {
     return $http({
@@ -102,7 +103,8 @@ angular.module('bracketmt.services', [])
     signup: signup,
     isAuth: isAuth,
     signout: signout,
-    email: email
+    email: email,
+    userId: userId
   };
 
 });

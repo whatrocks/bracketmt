@@ -7,14 +7,12 @@
     <input type="text" ng-model='filter' aria-label="filter">
   </md-input-container>
 
-  <md-list>
-    <md-list-item class="md-3-line" ng-repeat="tournament in tournaments | filter: filter">
-      <div class='md-list-item-text'>
-        <h3>{{tournament.name}}</h3>
+  <md-list ng-cloak>
+    <md-list-item ng-repeat="tournament in tournaments | filter: filter">
+        <h2><b>{{tournament.name}}</b></h2>
         <h4>{{tournament.Game.name}}</h4>
-        <p>{{tournament.Type.name}}</p>
-        <md-button class="md-raised md-primary" type="submit">Join</md-button>
-      </div>
+        <h5>{{tournament.Type.name}}</h5>
+        <md-button class="md-raised md-warn">Join</md-button>
     </md-list-item>
   </md-list>
 
