@@ -8,21 +8,30 @@ angular.module('bracketmt', [
   $stateProvider
     .state('nav', {
       url: '/nav',
-      templateUrl: 'app/nav/nav.html'
+      templateUrl: 'app/nav/nav.html',
+      authenticate: true
     })
     .state('nav.signup', {
       url: '/signup',
       templateUrl: 'app/auth/signup.html',
-      controller: 'AuthController'
+      controller: 'AuthController',
+      authenticate: false
     })
     .state('nav.signin', {
       url: '/signin',
       templateUrl: 'app/auth/signin.html',
-      controller: 'AuthController'
+      controller: 'AuthController',
+      authenticate: false
     })
     .state('nav.create', {
       url: '/create',
-      templateUrl: 'app/admin/create.html'
+      templateUrl: 'app/admin/create.html',
+      authenticate: true
+    })
+    .state('nav.logout', {
+      url: '/logout',
+      templateUrl: 'app/auth/signin.html',
+      authenticate: false
     });
 
   $urlRouterProvider.otherwise('/nav/signup');
@@ -40,4 +49,20 @@ angular.module('bracketmt', [
     }
   };
   return attach;
+})
+.run(function ($rootScope, $location, Auth){
+  $rootScope.$on('$stateChangeStart', function (evt, next, current){
+    
+    if (next.url === "/logout"){
+      Auth.signout();
+    }
+
+    // console.log(next);
+    // console.log(next.authenticate);
+    // console.log("auth is: ", Auth.isAuth());
+    if (next && next.authenticate && !Auth.isAuth()){
+      console.log("You need to sign in");
+      $location.path('/nav/signin');
+    }
+  });
 });

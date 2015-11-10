@@ -14,6 +14,7 @@ module.exports = {
       res.json({token: token});
     })
     .catch(function (error) {
+      console.log("error is :", error);
       next(error);
     });
 
@@ -31,10 +32,8 @@ module.exports = {
                                   last: last, 
                                   email: email, 
                                   salt: 'salty', 
-                                  hash: password } })
+                                  password: password } })
     .then(function (user) {
-      // user = user.dataValues;
-      console.log("user is now: ", user);
       var token = jwt.encode(user, 'secret');
       res.json({token: token});
     })
@@ -46,23 +45,23 @@ module.exports = {
 
   checkAuth: function() {
 
-    // var token = req.headers['x-access-token'];
-    // if (!token) {
-    //   next(new Error('No token'));
-    // } else {
-    //   var user = jwt.decode(token, 'secret');
-    //   db.User.findOne({ email: user.email})
-    //   .then(function (foundUser){
-    //     if (foundUser){
-    //       res.send(200);
-    //     } else {
-    //     res.send(404);
-    //     }
-    //   })
-    //   .catch(function (error) {
-    //     next(error);
-    //   });
-    // }
+    var token = req.headers['x-access-token'];
+    if (!token) {
+      next(new Error('No token'));
+    } else {
+      var user = jwt.decode(token, 'secret');
+      db.User.findOne({ email: user.email})
+      .then(function (foundUser){
+        if (foundUser){
+          res.send(200);
+        } else {
+        res.send(404);
+        }
+      })
+      .catch(function (error) {
+        next(error);
+      });
+    }
   }
 
 };

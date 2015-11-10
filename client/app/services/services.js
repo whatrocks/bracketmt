@@ -26,6 +26,7 @@ angular.module('bracketmt.services', [])
   };
 
   var isAuth = function() {
+    console.log($window.localStorage.getItem('com.bracketmt'));
     return !!$window.localStorage.getItem('com.bracketmt');
   };
 

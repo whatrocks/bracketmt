@@ -2,21 +2,7 @@ var logic = require('./logic');
 var Sequelize = require('sequelize');
 var orm = new Sequelize('bracketmt', 'root', 'H0Y@');
 var Promise = require('bluebird');
-var crypto = require('crypto');
-
-///////////////////////////////////////////////////////
-// Drop tables
-///////////////////////////////////////////////////////
-
-/*
-DROP TABLE matches;
-DROP TABLE participants;
-DROP TABLE tournaments;
-DROP TABLE statuses;
-DROP TABLE users;
-DROP TABLE types;
-DROP TABLE games;
-*/
+var bcrypt = require('bcrypt-nodejs');
 
 ///////////////////////////////////////////////////////
 // Schema + Initialization with test data
@@ -27,8 +13,15 @@ var User = orm.define('User', {
   last: { type: Sequelize.STRING, allowNull: false },
   email: { type: Sequelize.STRING, allowNull: false, unique: true },
   salt: { type: Sequelize.STRING, allowNull: false },
-  hash: { type: Sequelize.STRING, allowNull: false }
+  password: { type: Sequelize.STRING, allowNull: false }
+}, {
+  instanceMethods: {
+    // comparePassword: function(candidatePassword, cb) {
+    //   bcrypt.compare(candidatePassword, this.getDataValue('password'));
+    // }
+  } 
 });
+
 
 var Game = orm.define('Game', {
   name: { type: Sequelize.STRING, allowNull: false, unique: true }
@@ -99,10 +92,10 @@ Promise.all([
   Type.findOrCreate({ where: { name: 'Single Elimination' } });
 
   // Test Users
-  User.findOrCreate({ where: { first: 'Darth', last: 'Vader', email: 'anakin@skywalker.com', salt: '123', hash: '456' } });
-  User.findOrCreate({ where: { first: 'Luke', last: 'Skywalker', email: 'luke@skywalker.com', salt: '123', hash: '456' } });
-  User.findOrCreate({ where: { first: 'Han', last: 'Solo', email: 'han@falcon.org', salt: '123', hash: '456'} });
-  User.findOrCreate({ where: { first: 'Leia', last: 'Organa-Solo', email: 'leia@alderaan.net', salt: '123', hash: '456'} });
+  User.findOrCreate({ where: { first: 'Darth', last: 'Vader', email: 'anakin@skywalker.com', salt: '123', password: '456' } });
+  User.findOrCreate({ where: { first: 'Luke', last: 'Skywalker', email: 'luke@skywalker.com', salt: '123', password: '456' } });
+  User.findOrCreate({ where: { first: 'Han', last: 'Solo', email: 'han@falcon.org', salt: '123', password: '456'} });
+  User.findOrCreate({ where: { first: 'Leia', last: 'Organa-Solo', email: 'leia@alderaan.net', salt: '123', password: '456'} });
 
 })
 .then(function(){
