@@ -6,6 +6,18 @@ angular.module('bracketmt.services', [])
 
   };
 
+  var getTournaments = function() {
+
+    return $http({
+      method: 'GET',
+      url: 'api/tournaments/tournaments'
+    })
+    .then(function (resp){
+      return resp.data;
+    });
+
+  };
+
   var getGames = function() {
 
     return $http({
@@ -30,6 +42,7 @@ angular.module('bracketmt.services', [])
 
   return {
     createTournament: createTournament,
+    getTournaments: getTournaments,
     getGames: getGames,
     getTypes: getTypes
   };

@@ -4,6 +4,7 @@ angular.module('bracketmt.admin', [])
 
   $scope.games = {};
   $scope.types = {};
+  $scope.tournaments = {};
 
   $scope.getGames = function() {
     Admin.getGames()
@@ -25,7 +26,18 @@ angular.module('bracketmt.admin', [])
       });
   };
 
+  $scope.getTournaments = function() {
+    Admin.getTournaments()
+      .then(function (tournaments){
+        $scope.tournaments = tournaments;
+      })
+      .catch(function (error){
+        console.error(error);
+      });
+  };
+
   $scope.getGames();
   $scope.getTypes();
+  $scope.getTournaments();
 
 });
