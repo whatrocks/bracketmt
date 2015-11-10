@@ -5,6 +5,9 @@ angular.module('bracketmt.auth', [])
   $scope.user = {};
 
   $scope.signin = function () {
+
+    Auth.email = $scope.user.email;
+
     Auth.signin($scope.user)
       .then(function (token) {
         $window.localStorage.setItem('com.bracketmt', token);
@@ -16,6 +19,9 @@ angular.module('bracketmt.auth', [])
   };
 
   $scope.signup = function () {
+    
+    Auth.email = $scope.user.email;
+
     Auth.signup($scope.user)
       .then(function (token) {
         $window.localStorage.setItem('com.bracketmt', token);

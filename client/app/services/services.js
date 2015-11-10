@@ -64,10 +64,6 @@ angular.module('bracketmt.services', [])
 
   var email = "";
 
-  var currentUserEmail = function() {
-    return email;
-  };
-
   var signin = function (user) {
     return $http({
       method: 'POST',
@@ -75,6 +71,7 @@ angular.module('bracketmt.services', [])
       data: user
     })
     .then(function (resp) {
+      console.log("resp is :", resp);
       return resp.data.token;
     });
   };
@@ -105,7 +102,7 @@ angular.module('bracketmt.services', [])
     signup: signup,
     isAuth: isAuth,
     signout: signout,
-    currentUserEmail: currentUserEmail
+    email: email
   };
 
 });

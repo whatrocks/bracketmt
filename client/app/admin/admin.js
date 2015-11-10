@@ -40,7 +40,7 @@ angular.module('bracketmt.admin', [])
   $scope.createTournament = function() {
     
     // Hardcoding all owners to Darth Vader for now
-    $scope.tournament.email = "anakin@skywalker.com";
+    $scope.tournament.email = Auth.email;
     $scope.tournament.status = "Upcoming";
 
     Admin.createTournament($scope.tournament)
