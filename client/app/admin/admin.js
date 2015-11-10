@@ -38,6 +38,9 @@ angular.module('bracketmt.admin', [])
   };
 
   $scope.createTournament = function() {
+
+    Admin.tournamentShortname = $scope.tournament.shortname;
+
     console.log("creating tournament"); 
     $scope.tournament.email = Auth.email;
     $scope.tournament.status = "Upcoming";
@@ -53,7 +56,7 @@ angular.module('bracketmt.admin', [])
       });
   };
 
-  $scope.join = function(tournament) {
+  $scope.explore = function(tournament) {
     Admin.tournamentShortname = tournament.shortname;
     console.log("!!!!!!!!!!!!!!!!!!!!!!!!!");
     console.log(tournament.shortname);
