@@ -19,4 +19,7 @@ module.exports = function(app, express) {
 
   app.use('/api/types', typeRouter);
   require('../types/typeRoutes.js')(typeRouter);
+
+  app.use('/api/tournaments', tournamentRouter);
+  require('../tournaments/tournamentRoutes.js')(tournamentRouter);
 };
