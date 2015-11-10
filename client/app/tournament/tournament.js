@@ -5,7 +5,7 @@ angular.module('bracketmt.tournament', [])
   $scope.tournament = {};
 
   $scope.getTournament = function() {
-    Admin.getTournament()
+    Admin.getTournament(Admin.tournamentShortname)
       .then(function (tournament){
         $scope.tournament = tournament;
       })
@@ -15,5 +15,7 @@ angular.module('bracketmt.tournament', [])
   };
 
   $scope.start = function () {};
+
+  $scope.getTournament();
 
 });

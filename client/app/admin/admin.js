@@ -54,9 +54,9 @@ angular.module('bracketmt.admin', [])
   };
 
   $scope.join = function(tournament) {
-    Admin.tournamentId = tournament.id;
-    console.log("I joined a tournie");
-    console.log(tournament);
+    Admin.tournamentShortname = tournament.shortname;
+    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!");
+    console.log(tournament.shortname);
     $state.go('nav.tournament');
   };
 
