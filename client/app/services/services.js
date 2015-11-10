@@ -1,5 +1,17 @@
 angular.module('bracketmt.services', [])
 
+.factory('Admin', function(){
+
+  var create = function() {
+
+  };
+
+  return {
+    create: create
+  };
+
+})
+
 .factory('Auth', function($http, $location, $window) {
 
   var signin = function (user) {

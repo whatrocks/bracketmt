@@ -62,7 +62,8 @@ module.exports = {
 
   },
 
-  checkAuth: function() {
+  // TODO:  NOT SURE IF THIS WORKING
+  checkAuth: function(req, res, next) {
 
     var token = req.headers['x-access-token'];
     if (!token) {

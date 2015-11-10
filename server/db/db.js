@@ -107,41 +107,41 @@ Promise.all([
 })
 .then(function(){
   Match.sync();
-})
-.then(function(){
-
-  // Games
-  Game.findOrCreate({ where: { name: 'Ping Pong' } });
-  Game.findOrCreate({ where: { name: 'Beer Pong' } });
-  Game.findOrCreate({ where: { name: '3x3 Basketball' } });
-
-  // Statuses
-  Status.findOrCreate({ where: { name: 'Upcoming' } });
-  Status.findOrCreate({ where: { name: 'In Progress' } });
-  Status.findOrCreate({ where: { name: 'Completed' } });
-
-  // Types
-  Type.findOrCreate({ where: { name: 'Single Elimination' } });
-
-  // Test Users
-  User.findOrCreate({ where: { first: 'Darth', last: 'Vader', email: 'anakin@skywalker.com', salt: '123', password: '456' } });
-  User.findOrCreate({ where: { first: 'Luke', last: 'Skywalker', email: 'luke@skywalker.com', salt: '123', password: '456' } });
-  User.findOrCreate({ where: { first: 'Han', last: 'Solo', email: 'han@falcon.org', salt: '123', password: '456'} });
-  User.findOrCreate({ where: { first: 'Leia', last: 'Organa-Solo', email: 'leia@alderaan.net', salt: '123', password: '456'} });
-
-})
-.then(function(){
-  // Test Tournament
-  Tournament.findOrCreate({ where: { 
-    name: 'Death Star Pong',
-    shortname: 'deathstarpong',
-    OwnerId: 4,
-    GameId: 2,
-    TypeId: 1,
-    StatusId: 1
-  } });
-// TODO: add error catch  
 });
+// .then(function(){
+
+//   // Games
+//   Game.findOrCreate({ where: { name: 'Ping Pong' } });
+//   Game.findOrCreate({ where: { name: 'Beer Pong' } });
+//   Game.findOrCreate({ where: { name: '3x3 Basketball' } });
+
+//   // Statuses
+//   Status.findOrCreate({ where: { name: 'Upcoming' } });
+//   Status.findOrCreate({ where: { name: 'In Progress' } });
+//   Status.findOrCreate({ where: { name: 'Completed' } });
+
+//   // Types
+//   Type.findOrCreate({ where: { name: 'Single Elimination' } });
+
+//   // Test Users
+//   User.findOrCreate({ where: { first: 'Darth', last: 'Vader', email: 'anakin@skywalker.com', salt: '123', password: '456' } });
+//   User.findOrCreate({ where: { first: 'Luke', last: 'Skywalker', email: 'luke@skywalker.com', salt: '123', password: '456' } });
+//   User.findOrCreate({ where: { first: 'Han', last: 'Solo', email: 'han@falcon.org', salt: '123', password: '456'} });
+//   User.findOrCreate({ where: { first: 'Leia', last: 'Organa-Solo', email: 'leia@alderaan.net', salt: '123', password: '456'} });
+
+// })
+// .then(function(){
+//   // Test Tournament
+//   Tournament.findOrCreate({ where: { 
+//     name: 'Death Star Pong',
+//     shortname: 'deathstarpong',
+//     OwnerId: 4,
+//     GameId: 2,
+//     TypeId: 1,
+//     StatusId: 1
+//   } });
+// // TODO: add error catch  
+// });
 
 exports.User = User;
 exports.Game = Game;
