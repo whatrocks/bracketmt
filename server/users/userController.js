@@ -1,6 +1,8 @@
 var db = require('../db/db.js');
 var bluebird = require('bluebird');
 var jwt = require('jwt-simple');
+var bcrypt = require('bcrypt-nodejs');
+var SALT_WORK_FACTOR = 10;
 
 module.exports = {
 
@@ -10,8 +12,13 @@ module.exports = {
 
     db.User.findOne({where: { email: email}})
     .then(function (user) {
-      var token = jwt.encode(user, 'secret');
-      res.json({token: token});
+      if (!user) {
+        next( new Error("User does not exist!"));
+      } else {
+        // TODO: comparepassword
+        var token = jwt.encode(user, 'secret');
+        res.json({token: token});
+      }
     })
     .catch(function (error) {
       console.log("error is :", error);
@@ -33,6 +40,12 @@ module.exports = {
                                   email: email, 
                                   salt: 'salty', 
                                   password: password } })
+    .then(function (user) {
+      
+      console.log(user);
+
+      return user;
+    })
     .then(function (user) {
       var token = jwt.encode(user, 'secret');
       res.json({token: token});

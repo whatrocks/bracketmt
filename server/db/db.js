@@ -3,6 +3,7 @@ var Sequelize = require('sequelize');
 var orm = new Sequelize('bracketmt', 'root', 'H0Y@');
 var Promise = require('bluebird');
 var bcrypt = require('bcrypt-nodejs');
+var SALT_WORK_FACTOR = 10;
 
 ///////////////////////////////////////////////////////
 // Schema + Initialization with test data
@@ -16,10 +17,41 @@ var User = orm.define('User', {
   password: { type: Sequelize.STRING, allowNull: false }
 }, {
   instanceMethods: {
-    // comparePassword: function(candidatePassword, cb) {
-    //   bcrypt.compare(candidatePassword, this.getDataValue('password'));
-    // }
+    comparePassword: function(candidatePassword, cb) {
+      bcrypt.compare(candidatePassword, this.getDataValue('password'), function(err, isMatch) {
+        if (err) {
+          return cb(err);
+        } else {
+          cb(null, isMatch);
+        }
+      });
+    }
   } 
+});
+
+User.addHook('beforeCreate', 'hashPassword', function(user, options, next){
+  
+  console.log("hashing the password");
+  
+  bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+
+    if (err) {
+      return next(err);
+    }
+
+    console.log("salt is: ", salt);
+
+    bcrypt.hash(user.password, salt, null, function(err, hash){
+      if (err) {
+        return next(err);
+      }
+
+      console.log("hash is: ", hash);
+      user.set('password', hash);
+      user.set('salt', salt);
+      next();
+    });
+  });
 });
 
 

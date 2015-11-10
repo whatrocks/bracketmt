@@ -34,7 +34,7 @@ angular.module('bracketmt', [
       authenticate: false
     });
 
-  $urlRouterProvider.otherwise('/nav/signup');
+  $urlRouterProvider.otherwise('/nav/create');
   $httpProvider.interceptors.push('AttachTokens');
 })
 .factory('AttachTokens', function ($window){

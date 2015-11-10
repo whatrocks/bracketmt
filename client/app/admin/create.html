@@ -12,13 +12,13 @@
     </md-input-container>
     
     <md-select ng-model="tournament.game">
-      <md-option ng-repeat="game in games" value="{{game.name}}">
+      <md-option ng-repeat="game in games" value="{{game.name}}" aria-label="Game selection">
         {{game.name}}
       </md-option>
     </md-select>
 
     <md-select ng-model="tournament.type">
-      <md-option ng-repeat="type in types" value="{{type.name}}">
+      <md-option ng-repeat="type in types" value="{{type.name}}" aria-label="Type selection">
         {{type.name}}
       </md-option>
     </md-select>
