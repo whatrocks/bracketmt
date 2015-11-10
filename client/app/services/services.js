@@ -2,15 +2,26 @@ angular.module('bracketmt.services', [])
 
 .factory('Admin', function ($http) {
 
-  var createTournament = function() {
+  var createTournament = function(tournament) {
+    
+    console.log("new tournament is :", tournament);
 
+    return $http({
+      method: 'POST',
+      url: '/api/tournaments/',
+      data: tournament
+    })
+    .then(function (resp){
+      console.log(resp);
+      return resp.data;
+    });
   };
 
   var getTournaments = function() {
 
     return $http({
       method: 'GET',
-      url: 'api/tournaments/tournaments'
+      url: 'api/tournaments/'
     })
     .then(function (resp){
       return resp.data;
@@ -51,6 +62,12 @@ angular.module('bracketmt.services', [])
 
 .factory('Auth', function($http, $location, $window) {
 
+  var email = "";
+
+  var currentUserEmail = function() {
+    return email;
+  };
+
   var signin = function (user) {
     return $http({
       method: 'POST',
@@ -63,7 +80,6 @@ angular.module('bracketmt.services', [])
   };
 
   var signup = function (user) {
-    console.log("user is: ", user);
     return $http({
       method: 'POST',
       url: 'api/users/signup',
@@ -75,7 +91,7 @@ angular.module('bracketmt.services', [])
   };
 
   var isAuth = function() {
-    console.log($window.localStorage.getItem('com.bracketmt'));
+    // console.log($window.localStorage.getItem('com.bracketmt'));
     return !!$window.localStorage.getItem('com.bracketmt');
   };
 
@@ -88,7 +104,8 @@ angular.module('bracketmt.services', [])
     signin: signin,
     signup: signup,
     isAuth: isAuth,
-    signout: signout
+    signout: signout,
+    currentUserEmail: currentUserEmail
   };
 
 });

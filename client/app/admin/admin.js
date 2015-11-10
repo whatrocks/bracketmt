@@ -1,10 +1,11 @@
 angular.module('bracketmt.admin', [])
 
-.controller('AdminController', function($scope, Admin){
+.controller('AdminController', function($scope, $location, Admin, Auth){
 
   $scope.games = {};
   $scope.types = {};
   $scope.tournaments = {};
+  $scope.tournament = {};
 
   $scope.getGames = function() {
     Admin.getGames()
@@ -30,6 +31,21 @@ angular.module('bracketmt.admin', [])
     Admin.getTournaments()
       .then(function (tournaments){
         $scope.tournaments = tournaments;
+      })
+      .catch(function (error){
+        console.error(error);
+      });
+  };
+
+  $scope.createTournament = function() {
+    
+    // Hardcoding all owners to Darth Vader for now
+    $scope.tournament.owner = "anakin@skywalker.com";
+    $scope.tournament.status = "Upcoming";
+
+    Admin.createTournament($scope.tournament)
+      .then(function() {
+        $location.path('/join');
       })
       .catch(function (error){
         console.error(error);
