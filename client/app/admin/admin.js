@@ -2,9 +2,9 @@ angular.module('bracketmt.admin', [])
 
 .controller('AdminController', function($scope, $location, Admin, Auth){
 
-  $scope.games = {};
-  $scope.types = {};
-  $scope.tournaments = {};
+  $scope.games = [];
+  $scope.types = [];
+  $scope.tournaments = [];
   $scope.tournament = {};
 
   $scope.getGames = function() {
