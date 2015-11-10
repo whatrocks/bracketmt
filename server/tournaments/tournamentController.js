@@ -18,19 +18,43 @@ module.exports = {
     var shortname = req.body.shortname;
 
     // Need to convert into their foreign keys
-    // var game = req.body.game;
-    // var type = req.body.type;
-    // var owner = req.body.owner;
-    // var status = req.body.status;
+    var gameId = req.body.game;
+    var typeId = req.body.type;
+    var emailId = req.body.email;
+    var statusId = req.body.status;
 
-    db.Tournament.findOrCreate( { where : {
-      name: name,
-      shortname: shortname,
-      OwnerId: 1,
-      GameId: 1,
-      TypeId: 1,
-      StatusId: 1
-    }})
+    Promise.all([
+      db.User.findOne({ where: { email: emailId }})
+        .then(function(user){
+          emailId = user.id; 
+        }),
+
+      db.Type.findOne({ where: { name: typeId }})
+        .then(function(type){
+          typeId = type.id; 
+        }),
+
+      db.Game.findOne({ where: { name: gameId }})
+        .then(function(game){
+          gameId = game.id; 
+        }),
+
+      db.Status.findOne({ where: { name: statusId }})
+        .then(function(status){
+          statusId = status.id; 
+        })
+
+    ])
+    .then(function (){
+      db.Tournament.findOrCreate( { where : {
+        name: name,
+        shortname: shortname,
+        OwnerId: emailId,
+        GameId: gameId,
+        TypeId: typeId,
+        StatusId: statusId
+      }});
+    })
     .then(function (createdTournament){
       if (createdTournament){
         res.json(createdTournament);
