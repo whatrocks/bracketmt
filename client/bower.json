@@ -17,6 +17,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular-material-data-table": "~0.8.14"
+    "angular-material-data-table": "~0.8.14",
+    "d3": "~3.5.8"
   }
 }
