@@ -1,6 +1,7 @@
 angular.module('bracketmt', [
   'bracketmt.services',
   'bracketmt.auth',
+  'bracketmt.admin',
   'ui.router',
   'ngMaterial'
 ])
@@ -26,6 +27,7 @@ angular.module('bracketmt', [
     .state('nav.create', {
       url: '/create',
       templateUrl: 'app/admin/create.html',
+      controller: 'AdminController',
       authenticate: true
     })
     .state('nav.logout', {

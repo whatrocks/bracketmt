@@ -1,13 +1,37 @@
 angular.module('bracketmt.services', [])
 
-.factory('Admin', function(){
+.factory('Admin', function ($http) {
 
-  var create = function() {
+  var createTournament = function() {
 
   };
 
+  var getGames = function() {
+
+    return $http({
+      method: 'GET',
+      url: 'api/games/games'
+    })
+    .then(function (resp){
+      return resp.data;
+    });
+
+  };
+
+  var getTypes = function() {
+    return $http({
+      method: 'GET',
+      url: 'api/types/types'
+    })
+    .then(function (resp){
+      return resp.data;
+    });
+  };
+
   return {
-    create: create
+    createTournament: createTournament,
+    getGames: getGames,
+    getTypes: getTypes
   };
 
 })
