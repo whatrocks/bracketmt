@@ -1,14 +1,14 @@
 angular.module('bracketmt.directives', [])
 
-.directive('d3test', function () {
+.directive('bracket', function () {
     return {
       template: '<div></div>',
       restrict: 'E',
       replace: false,
       scope: { data: '='},
       link: function postLink(scope, element, attrs) {
-        var w = 500;
-        var h = 400;
+        var w = 1000;
+        var h = 600;
 
         var svg = d3.select(element[0]).append('svg')
           .attr('width', w)

@@ -1,13 +1,36 @@
 <div id="tournament" ng-model="tournament">
+  
+  
+  <md-toolbar class="md-hue-2">
+    <div class="md-toolbar-tools">
+      <span> <b> {{tournament.name}} </b></span>
+      <!-- fill up the space between left and right area -->
+      <span flex></span>
+      <span>{{tournament.Game.name}}</span>
+      <span flex></span>
+      <span>{{tournament.Type.name}}</span>
+      <span flex></span>
+      
+      <form novalidate name="joinForm" ng-submit="joinTournament()">
+
+        <md-button class="md-raised md-warn">Join</md-button>
+
+      </form>   
+  
+    </div>
+  </md-toolbar>
+
+
+<!-- 
   <h1> {{tournament.name}}</h1>
   <h2> {{tournament.Game.name}}</h2>
   <h3> {{tournament.Type.name}}</h3>
-  
-  <form novalidate name="joinForm" ng-submit="joinTournament()">
+ -->  
+<!--   <form novalidate name="joinForm" ng-submit="joinTournament()">
 
     <md-button class="md-raised md-primary">Join</md-button>
 
-  </form>
+  </form> -->
   
   <p> List of participants</p>
   <ul>
@@ -18,20 +41,9 @@
     </li>
   </ul>
 
-
-  <!-- Test d3 directive -->
-  <input
-    ng-init="circlecount=10"
-    ng-change="getTheData(circlecount)"
-    ng-model="circlecount"
-    type="range" name="points" min="2" max="20">
-
-    <div>Count: {{circlecount}} Data: {{theData}}</div>
-
-    <d3test
-            ng-init="getTheData(circlecount)"
-            data="theData">
-    </d3test>
-
+    <bracket
+      ng-model="participants"
+      data="participantsCircles">
+    </bracket>
 
 </div>

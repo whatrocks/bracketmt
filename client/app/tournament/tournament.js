@@ -4,11 +4,18 @@ angular.module('bracketmt.tournament', [])
 
   $scope.tournament = {};
   $scope.participants = [];
+  $scope.participantsCircles = [];
 
-  $scope.getTheData = function(circlecount) {
-      // Generate an array of sequential numbers.
-      $scope.theData = d3.range($scope.circlecount).map(function(i) { return (i + 1) * 5; });
-  };
+  // $scope.countParticipants = function() {
+  //   // return $scope.participants.length;
+  //   $scope.theData = d3.range($scope.participants).map(function(i) { return i + 1;});
+  // };
+
+  // $scope.getTheData = function(circlecount) {
+  //     // Generate an array of sequential numbers.
+  //     $scope.theData = d3.range($scope.circlecount).map(function(i) { return (i + 1) * 5; });
+  // };
+
 
 
   // for joining
@@ -28,12 +35,16 @@ angular.module('bracketmt.tournament', [])
   $scope.getParticipants = function() {
     Admin.getParticipants(Admin.tournamentShortname)
       .then(function (participants){
+        var counter = 1;
         for ( var i = 0; i < participants.length; i++ ) {
           if (participants[i].TournamentId === $scope.tournament.id) {
+            $scope.participantsCircles.push(counter);
+            counter++;
             $scope.participants.push(participants[i]);
           }
         }
         console.log("Participants: ", $scope.participants);
+        console.log("Participants Circles: ", $scope.participantsCircles);
       })
       .catch(function (error){
         console.error(error);
@@ -62,6 +73,5 @@ angular.module('bracketmt.tournament', [])
   $scope.start = function () {};
 
   $scope.getTournament();
-  // $scope.getParticipants();
 
 });
