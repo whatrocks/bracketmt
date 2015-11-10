@@ -17,10 +17,10 @@ var User = orm.define('User', {
   password: { type: Sequelize.STRING, allowNull: false }
 }, {
   instanceMethods: {
-    comparePassword: function(candidatePassword, cb) {
+    comparePasswords: function(candidatePassword, cb) {
       bcrypt.compare(candidatePassword, this.getDataValue('password'), function(err, isMatch) {
         if (err) {
-          return cb(err);
+          cb(err, null);
         } else {
           cb(null, isMatch);
         }

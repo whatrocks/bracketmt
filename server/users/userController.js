@@ -15,9 +15,15 @@ module.exports = {
       if (!user) {
         next( new Error("User does not exist!"));
       } else {
-        // TODO: comparepassword
-        var token = jwt.encode(user, 'secret');
-        res.json({token: token});
+        
+        user.comparePasswords(password, function(err, foundUser){
+          if (foundUser) {
+            var token = jwt.encode(user, 'secret');
+            res.json({token: token});            
+          } else {
+            return next(new Error("No user"));
+        } 
+        });
       }
     })
     .catch(function (error) {
