@@ -5,6 +5,12 @@ angular.module('bracketmt.tournament', [])
   $scope.tournament = {};
   $scope.participants = [];
 
+  $scope.getTheData = function(circlecount) {
+      // Generate an array of sequential numbers.
+      $scope.theData = d3.range($scope.circlecount).map(function(i) { return (i + 1) * 5; });
+  };
+
+
   // for joining
   $scope.newParticipant = {};
 
@@ -27,6 +33,7 @@ angular.module('bracketmt.tournament', [])
             $scope.participants.push(participants[i]);
           }
         }
+        console.log("Participants: ", $scope.participants);
       })
       .catch(function (error){
         console.error(error);

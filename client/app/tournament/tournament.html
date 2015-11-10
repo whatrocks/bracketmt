@@ -19,6 +19,19 @@
   </ul>
 
 
+  <!-- Test d3 directive -->
+  <input
+    ng-init="circlecount=10"
+    ng-change="getTheData(circlecount)"
+    ng-model="circlecount"
+    type="range" name="points" min="2" max="20">
+
+    <div>Count: {{circlecount}} Data: {{theData}}</div>
+
+    <d3test
+            ng-init="getTheData(circlecount)"
+            data="theData">
+    </d3test>
 
 
 </div>

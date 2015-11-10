@@ -18,6 +18,8 @@
   ],
   "dependencies": {
     "angular-material-data-table": "~0.8.14",
-    "d3": "~3.5.8"
+    "d3": "~3.5.8",
+    "nvd3": "~1.8.1",
+    "angularjs-nvd3-directives": "~0.0.7"
   }
 }
