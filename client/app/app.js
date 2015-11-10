@@ -2,6 +2,7 @@ angular.module('bracketmt', [
   'bracketmt.services',
   'bracketmt.auth',
   'bracketmt.admin',
+  'bracketmt.tournament',
   'ui.router',
   'ngMaterial'
 ])
@@ -36,6 +37,12 @@ angular.module('bracketmt', [
       controller: 'AdminController',
       authenticate: true
     })
+    .state('nav.tournament', {
+      url: '/tournament',
+      templateUrl: 'app/tournament/tournament.html',
+      controller: 'TournamentController',
+      authenticate: true
+    })
     .state('nav.logout', {
       url: '/logout',
       templateUrl: 'app/auth/signin.html',
@@ -65,9 +72,6 @@ angular.module('bracketmt', [
       Auth.signout();
     }
 
-    // console.log(next);
-    // console.log(next.authenticate);
-    // console.log("auth is: ", Auth.isAuth());
     if (next && next.authenticate && !Auth.isAuth()){
       console.log("You need to sign in");
       $location.path('/nav/signin');

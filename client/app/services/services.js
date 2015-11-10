@@ -2,10 +2,10 @@ angular.module('bracketmt.services', [])
 
 .factory('Admin', function ($http) {
 
+  var tournamentId = 0;
+
   var createTournament = function(tournament) {
     
-    console.log("new tournament is :", tournament);
-
     return $http({
       method: 'POST',
       url: '/api/tournaments/',
@@ -16,6 +16,10 @@ angular.module('bracketmt.services', [])
       return resp.data;
     });
   };
+
+  // TODO: Add a join specific tournament ID
+
+  // TODO: Get specific tournament ID
 
   var getTournaments = function() {
 
@@ -52,6 +56,7 @@ angular.module('bracketmt.services', [])
   };
 
   return {
+    tournamentId: tournamentId,
     createTournament: createTournament,
     getTournaments: getTournaments,
     getGames: getGames,

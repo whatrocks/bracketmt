@@ -5,7 +5,7 @@ angular.module('bracketmt.admin', [])
   $scope.games = [];
   $scope.types = [];
   $scope.tournaments = [];
-  $scope.tournament = {};
+  $scope.selectedTournament = {};
 
   $scope.getGames = function() {
     Admin.getGames()
@@ -39,7 +39,6 @@ angular.module('bracketmt.admin', [])
 
   $scope.createTournament = function() {
     
-    // Hardcoding all owners to Darth Vader for now
     $scope.tournament.email = Auth.email;
     $scope.tournament.status = "Upcoming";
 
@@ -50,6 +49,12 @@ angular.module('bracketmt.admin', [])
       .catch(function (error){
         console.error(error);
       });
+  };
+
+  $scope.join = function(tournament) {
+    console.log($scope.selectedTournament);
+    console.log("clicked tournament: ", tournament);
+
   };
 
   $scope.getGames();

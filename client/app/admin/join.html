@@ -2,7 +2,6 @@
   
   <h1> Join a Tournament</h1>
 
-
   <md-input-container>
     <input type="text" ng-model='filter' aria-label="filter">
   </md-input-container>
@@ -12,7 +11,9 @@
         <h2><b>{{tournament.name}}</b></h2>
         <h4>{{tournament.Game.name}}</h4>
         <h5>{{tournament.Type.name}}</h5>
-        <md-button class="md-raised md-warn">Join</md-button>
+        <form novalidate name="joinForm" ng-submit="join()">
+          <md-button type="submit" class="md-raised md-warn" href="/#/nav/tournaments/{{tournament.shortname}}">Join</md-button>
+        </form>
     </md-list-item>
   </md-list>
 
