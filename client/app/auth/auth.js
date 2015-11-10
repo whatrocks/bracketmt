@@ -8,6 +8,7 @@ angular.module('bracketmt.auth', [])
 
     Auth.email = $scope.user.email;
     Auth.userId = $scope.user.id;
+    Auth.first = $scope.user.first;
 
     Auth.signin($scope.user)
       .then(function (token) {

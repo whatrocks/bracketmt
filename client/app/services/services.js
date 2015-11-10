@@ -17,13 +17,23 @@ angular.module('bracketmt.services', [])
     });
   };
 
-  // TODO: Add a join specific tournament ID
-
   var getTournament = function(shortname) {
 
     return $http({
       method: 'GET',
       url: 'api/tournaments/' + shortname
+    })
+    .then(function (resp){
+      return resp.data;
+    });
+
+  };
+
+  var getParticipants = function() {
+
+    return $http({
+      method: 'GET',
+      url: 'api/participants/'
     })
     .then(function (resp){
       return resp.data;
@@ -71,6 +81,7 @@ angular.module('bracketmt.services', [])
     createTournament: createTournament,
     getTournament: getTournament,
     getTournaments: getTournaments,
+    getParticipants: getParticipants,
     getGames: getGames,
     getTypes: getTypes
   };
@@ -80,6 +91,7 @@ angular.module('bracketmt.services', [])
 .factory('Auth', function($http, $location, $window) {
 
   var email = "";
+  var first = "";
   var userId = 0;
 
   var signin = function (user) {
@@ -121,7 +133,8 @@ angular.module('bracketmt.services', [])
     isAuth: isAuth,
     signout: signout,
     email: email,
-    userId: userId
+    userId: userId,
+    first: first
   };
 
 });

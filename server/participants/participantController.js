@@ -12,15 +12,10 @@ module.exports = {
 
   newParticipant: function(req, res, next) {
 
-  //   var name = req.body.name;
-  //   var shortname = req.body.shortname;
-
-  //   // Need to convert into their foreign keys
-  //   var gameId = req.body.game;
-  //   var typeId = req.body.type;
-  //   var emailId = req.body.email;
-  //   var statusId = req.body.status;
-
+    // Need to convert into their foreign keys
+    var tournamentId = req.body.tournament;
+    var userId = req.body.user;
+   
   //   Promise.all([
   //     db.User.findOne({ where: { email: emailId }})
   //       .then(function(user){

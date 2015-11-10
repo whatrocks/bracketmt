@@ -12,6 +12,7 @@ angular.module('bracketmt', [
     .state('nav', {
       url: '/nav',
       templateUrl: 'app/nav/nav.html',
+      controller: 'AuthController',
       authenticate: true
     })
     .state('nav.signup', {
