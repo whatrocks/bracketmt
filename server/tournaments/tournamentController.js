@@ -4,7 +4,7 @@ module.exports = {
 
   allTournaments: function(req, res, next) {
 
-    db.Tournament.findAll({include: [{model: db.User, as: 'Owner'}, db.Game, db.Status, db.Type]})
+    db.Tournament.findAll({include: [db.Game, db.Status, db.Type]})
     .then(function(tournaments){
       res.send(200, tournaments);
     });
