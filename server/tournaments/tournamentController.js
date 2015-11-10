@@ -53,17 +53,17 @@ module.exports = {
         GameId: gameId,
         TypeId: typeId,
         StatusId: statusId
-      }});
-    })
-    .then(function (createdTournament){
-      if (createdTournament){
-        res.json(createdTournament);
-      }
-    })
-    .catch(function (error){
-      next(error);
-    });
+      }})
+      .then(function (createdTournament){
+        if (createdTournament){
+          res.json(createdTournament);
+        }
+      })
+      .catch(function (error){
+        next(error);
+      });
 
+    });
   }
 
 };

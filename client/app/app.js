@@ -68,6 +68,8 @@ angular.module('bracketmt', [
 })
 .run(function ($rootScope, $location, Auth){
   $rootScope.$on('$stateChangeStart', function (evt, next, current){
+
+    console.log("next is: ", next);
     
     if (next.url === "/logout"){
       Auth.signout();

@@ -12,7 +12,7 @@ angular.module('bracketmt.services', [])
       data: tournament
     })
     .then(function (resp){
-      console.log(resp);
+      // console.log("the resp data is: ", resp.data);
       return resp.data;
     });
   };
