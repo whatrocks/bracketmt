@@ -6,6 +6,7 @@ module.exports = function(app, express) {
   var gameRouter = express.Router();
   var typeRouter = express.Router();
   var tournamentRouter = express.Router();
+  var participantRouter = express.Router();
 
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
@@ -22,4 +23,7 @@ module.exports = function(app, express) {
 
   app.use('/api/tournaments', tournamentRouter);
   require('../tournaments/tournamentRoutes.js')(tournamentRouter);
+
+  app.use('/api/participants', participantRouter);
+  require('../participants/participantRoutes.js')(participantRouter);
 };
