@@ -13,50 +13,29 @@ module.exports = {
   newParticipant: function(req, res, next) {
 
     // Need to convert into their foreign keys
-    var tournamentId = req.body.tournament;
-    var userId = req.body.user;
+    var tournamentId = req.body.tournamentId;
+    var userId = req.body.email;
    
-  //   Promise.all([
-  //     db.User.findOne({ where: { email: emailId }})
-  //       .then(function(user){
-  //         emailId = user.id; 
-  //       }),
+    db.User.findOne({ where: { email: userId }})
+    .then(function(user){
+      userId = user.id; 
+    })
+      .then(function (){
+        console.log("NEXT STEP");
+        db.Participant.findOrCreate( { where : {
+          UserId: userId,
+          TournamentId: tournamentId
+        }})
+      .then(function (createdParticipant){
+        if (createdParticipant){
+          res.json(createdParticipant);
+        }
+      })
+      .catch(function (error){
+        next(error);
+      });
 
-  //     db.Type.findOne({ where: { name: typeId }})
-  //       .then(function(type){
-  //         typeId = type.id; 
-  //       }),
-
-  //     db.Game.findOne({ where: { name: gameId }})
-  //       .then(function(game){
-  //         gameId = game.id; 
-  //       }),
-
-  //     db.Status.findOne({ where: { name: statusId }})
-  //       .then(function(status){
-  //         statusId = status.id; 
-  //       })
-
-  //   ])
-  //   .then(function (){
-  //     db.Tournament.findOrCreate( { where : {
-  //       name: name,
-  //       shortname: shortname,
-  //       OwnerId: emailId,
-  //       GameId: gameId,
-  //       TypeId: typeId,
-  //       StatusId: statusId
-  //     }})
-  //     .then(function (createdTournament){
-  //       if (createdTournament){
-  //         res.json(createdTournament);
-  //       }
-  //     })
-  //     .catch(function (error){
-  //       next(error);
-  //     });
-
-  //   });
+    });
   }
 
 };

@@ -2,7 +2,23 @@
   <h1> {{tournament.name}}</h1>
   <h2> {{tournament.Game.name}}</h2>
   <h3> {{tournament.Type.name}}</h3>
+  
+  <form novalidate name="joinForm" ng-submit="joinTournament()">
 
-  <md-button class="md-raised md-primary">Join</md-button>
+    <md-button class="md-raised md-primary">Join</md-button>
+
+  </form>
+  
+  <p> List of participants</p>
+  <ul>
+    <li ng-repeat="participant in participants" >
+      <div class='info'>
+        <div class='title'>{{participant.User.first}} {{participant.User.last}}</div>
+      </div>
+    </li>
+  </ul>
+
+
+
 
 </div>

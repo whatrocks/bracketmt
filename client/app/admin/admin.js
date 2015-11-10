@@ -58,8 +58,6 @@ angular.module('bracketmt.admin', [])
 
   $scope.explore = function(tournament) {
     Admin.tournamentShortname = tournament.shortname;
-    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!");
-    console.log(tournament.shortname);
     $state.go('nav.tournament');
   };
 

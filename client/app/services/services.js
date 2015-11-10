@@ -12,7 +12,18 @@ angular.module('bracketmt.services', [])
       data: tournament
     })
     .then(function (resp){
-      // console.log("the resp data is: ", resp.data);
+      return resp.data;
+    });
+  };
+
+  var joinTournament = function(participant) {
+    
+    return $http({
+      method: 'POST',
+      url: '/api/participants/',
+      data: participant
+    })
+    .then(function (resp){
       return resp.data;
     });
   };
@@ -79,6 +90,7 @@ angular.module('bracketmt.services', [])
   return {
     tournamentShortname: tournamentShortname,
     createTournament: createTournament,
+    joinTournament: joinTournament,
     getTournament: getTournament,
     getTournaments: getTournaments,
     getParticipants: getParticipants,
@@ -91,8 +103,6 @@ angular.module('bracketmt.services', [])
 .factory('Auth', function($http, $location, $window) {
 
   var email = "";
-  var first = "";
-  var userId = 0;
 
   var signin = function (user) {
     return $http({
@@ -132,9 +142,7 @@ angular.module('bracketmt.services', [])
     signup: signup,
     isAuth: isAuth,
     signout: signout,
-    email: email,
-    userId: userId,
-    first: first
+    email: email
   };
 
 });
