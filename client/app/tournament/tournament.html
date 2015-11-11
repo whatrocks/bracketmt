@@ -37,7 +37,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr md-auto-select ng-repeat="participant in participants">
+      <tr md-auto-select ng-repeat="(key, participant) in participants | orderBy: order">
         <td>{{participant.User.first}} {{participant.User.last}}</td>
         <td>{{participant.User.email}}</td>
         <td><span ng-if="participant.User.id == tournament.OwnerId">Owner</span><span ng-if="participant.User.id != tournament.OwnerId">Participant</span></td>

@@ -81,6 +81,7 @@ angular.module('bracketmt.tournament', [])
   $scope.joinTournament = function() {
 
     console.log("JOINING tournament"); 
+    $scope.participants = [];
     $scope.newParticipant.tournamentId = $scope.tournament.id;
     $scope.newParticipant.email = Auth.email;
 
@@ -88,7 +89,7 @@ angular.module('bracketmt.tournament', [])
       .then(function (data) {
         console.log("I've joined a tournament");
         $scope.getParticipants();
-        $state.go('nav.tournament');
+        // $state.go('nav.tournament');
       })
       .catch(function (error){
         console.log("Did not join the tournament");

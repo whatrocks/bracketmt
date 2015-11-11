@@ -8,17 +8,17 @@
 
   <md-data-table-container>
   <table md-data-table md-progress="deferred">
-    <thead md-order="query.order" md-trigger="onOrderChange">
+    <thead md-order="name" md-trigger="onOrderChange">
       <tr>
-        <th name="Tournament" order-by="tournament.name"></th>
-        <th name="Game" order-by="tournament.Game.name"></th>
-        <th name="Type" order-by="touranment.Type.name"></th>
-        <th name="Status" order-by="tournament.Status.name"></th>
+        <th name="Tournament" order-by="name"></th>
+        <th name="Game" order-by="name"></th>
+        <th name="Type" order-by="name"></th>
+        <th name="Status" order-by="name"></th>
         <th numeric name="Owner Id" order-by="tournament.OwnerId"></th>
       </tr>
     </thead>
     <tbody>
-      <tr md-auto-select ng-click="explore(tournament)" ng-repeat="tournament in tournaments">
+      <tr md-auto-select ng-click="explore(tournament)" ng-repeat="tournament in tournaments | orderBy: order">
         <td>{{tournament.name}}</td>
         <td>{{tournament.Game.name}}</td>
         <td>{{tournament.Type.name}}</td>

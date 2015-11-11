@@ -21,20 +21,6 @@ angular.module('bracketmt.directives', [])
             var randomX = function() { return Math.random () * w;};
             var randomY = function() { return Math.random () * h;};
 
-            // var escala = function(m) {
-            //   return d3.scale
-            //     .linear()
-            //     .domain([d3.min(data), d3.max(data)])
-            //     .range([10, m - 50]);
-            // };
-
-            // var ancho = escala(w);
-            // var alto = escala(h);
-            // var radio = d3.scale
-            //   .linear()
-            //   .domain([d3.min(data), d3.max(data)])
-            //   .range([10, 50]);
-
             var color = function(d) {
               return d3.hsl(d*10,1,0.5);
             };
