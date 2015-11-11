@@ -52,6 +52,8 @@ angular.module('bracketmt.services', [])
 
   };
 
+  
+
 
   var getTournaments = function() {
 

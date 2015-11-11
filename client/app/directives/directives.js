@@ -50,15 +50,15 @@ angular.module('bracketmt.directives', [])
             var circles = svg.selectAll('circle');
             var sel = circles.data(data);
             
+            sel.enter()
+              .append('circle')
+              .call(circle_set);
+            
             var moving = function() {
               sel
                 .transition()
-                .ease('bounce')
-                .duration(1000)
-                .call(circle_set);
-
-              sel.enter()
-                .append('circle')
+                .ease('elastic')
+                .duration(2000)
                 .call(circle_set);
 
               sel.exit()
@@ -67,7 +67,7 @@ angular.module('bracketmt.directives', [])
             
             setInterval(function(){
               moving();
-            }.bind(this), 1000);
+            }.bind(this), 2000);
 
           }
 
