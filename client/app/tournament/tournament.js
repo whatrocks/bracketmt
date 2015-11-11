@@ -4,6 +4,13 @@ angular.module('bracketmt.tournament', [])
 
   $scope.tournament = {};
   $scope.participants = [];
+  $scope.newParticipant = {};
+
+  // Metrics
+  $scope.numberPlayers = 0;
+  $scope.numberRounds = 0;
+  
+  // Bracket visualization
   $scope.circles = [4,5,6,7,8,9,10];
 
   $scope.getCircles = function() {
@@ -15,7 +22,29 @@ angular.module('bracketmt.tournament', [])
   //     $scope.theData = d3.range($scope.circlecount).map(function(i) { return (i + 1) * 5; });
   // };
 
-  $scope.newParticipant = {};
+
+  $scope.matchesInRound = function(numPlayers) {
+    var matches = Math.round(numPlayers / 2);
+    return matches;
+  };
+
+  $scope.numberOfRounds = function(numPlayers){
+    var rounds = 0;
+    var roundCounter = function(players) {
+      var matches = $scope.matchesInRound(players);
+    
+      if (matches === 1) {
+        rounds++;
+        return;
+      } else {
+        rounds++;
+        roundCounter(matches);
+      }
+    };
+    roundCounter(numPlayers);
+    return rounds;
+  };
+
 
   $scope.getTournament = function() {
     Admin.getTournament(Admin.tournamentShortname)
@@ -39,7 +68,8 @@ angular.module('bracketmt.tournament', [])
             $scope.participants.push(participants[i]);
           }
         }
-
+        $scope.numberPlayers = counter - 1;
+        $scope.numberRounds = $scope.numberOfRounds($scope.numberPlayers);
         // console.log($scope.circles);
 
       })
