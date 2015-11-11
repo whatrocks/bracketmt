@@ -43,9 +43,16 @@
   </table>
 </md-data-table-container>
 
-    <bracket
-      ng-model="participants"
-      data="participantsCircles">
-    </bracket>
+  <form novalidate name="drawForm" ng-submit="getCircles()">
+
+    <md-button class="md-raised md-warn">Bracket Time</md-button>
+
+  </form> 
+
+    
+  <bracket
+      ng-init="getCircles()"
+      data="circles">
+  </bracket>
 
 </div>

@@ -4,21 +4,17 @@ angular.module('bracketmt.tournament', [])
 
   $scope.tournament = {};
   $scope.participants = [];
-  $scope.participantsCircles = [];
+  $scope.circles = [4,5,6,7,8,9,10];
 
-  // $scope.countParticipants = function() {
-  //   // return $scope.participants.length;
-  //   $scope.theData = d3.range($scope.participants).map(function(i) { return i + 1;});
-  // };
+  $scope.getCircles = function() {
+    return $scope.circles;
+  };
 
   // $scope.getTheData = function(circlecount) {
   //     // Generate an array of sequential numbers.
   //     $scope.theData = d3.range($scope.circlecount).map(function(i) { return (i + 1) * 5; });
   // };
 
-
-
-  // for joining
   $scope.newParticipant = {};
 
   $scope.getTournament = function() {
@@ -38,13 +34,14 @@ angular.module('bracketmt.tournament', [])
         var counter = 1;
         for ( var i = 0; i < participants.length; i++ ) {
           if (participants[i].TournamentId === $scope.tournament.id) {
-            $scope.participantsCircles.push(counter);
+            $scope.circles.push(counter);
             counter++;
             $scope.participants.push(participants[i]);
           }
         }
-        console.log("Participants: ", $scope.participants);
-        console.log("Participants Circles: ", $scope.participantsCircles);
+
+        // console.log($scope.circles);
+
       })
       .catch(function (error){
         console.error(error);
