@@ -29,29 +29,20 @@
     <thead md-order="query.order" md-trigger="onOrderChange">
       <tr>
         <th name="Name" order-by="participant.User.first"></th>
-        <th name="Email" order-by="touranment.Type.name"></th>
+        <th name="Email" order-by="participant.User.email"></th>
+        <th name="Role"></th>
       </tr>
     </thead>
     <tbody>
       <tr md-auto-select ng-repeat="participant in participants">
         <td>{{participant.User.first}} {{participant.User.last}}</td>
         <td>{{participant.User.email}}</td>
+        <td><span ng-if="participant.User.id == tournament.OwnerId">Owner</span><span ng-if="participant.User.id != tournament.OwnerId">Participant</span></td>
       </tr>
     </tbody>
   </table>
 </md-data-table-container>
 
-
-<!--   
-  <p> List of participants</p>
-  <ul>
-    <li ng-repeat="participant in participants" >
-      <div class='info'>
-        <div class='title'>{{participant.User.first}} {{participant.User.last}}</div>
-      </div>
-    </li>
-  </ul>
- -->
     <bracket
       ng-model="participants"
       data="participantsCircles">
