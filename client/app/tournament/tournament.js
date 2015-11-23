@@ -85,7 +85,10 @@ angular.module('bracketmt.tournament', [])
     console.log("JOINING tournament"); 
     $scope.participants = [];
     $scope.newParticipant.tournamentId = $scope.tournament.id;
+    console.log("tournie id: ", $scope.tournament.id);
+
     $scope.newParticipant.email = $window.localStorage.getItem('email');
+    console.log("email is: ", $window.localStorage.getItem('email'));
 
     Admin.joinTournament($scope.newParticipant)
       .then(function (data) {

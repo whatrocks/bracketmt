@@ -5,24 +5,24 @@
     
     <label>Tournament Name</label>
     <md-input-container>
-      <input type="text" name="name" ng-model="tournament.name">
+      <input type="text" aria-label="name" name="name" ng-model="tournament.name">
     </md-input-container>
   
     <label>Unique URL</label>    
     <md-input-container>
-      <input type="text" name="shortname" ng-model="tournament.shortname">
+      <input type="text" aria-label="shortname" name="shortname" ng-model="tournament.shortname">
     </md-input-container>
     
 
     <label>Game</label>
-    <md-select ng-model="tournament.game">
+    <md-select ng-model="tournament.game" aria-label="game">
       <md-option ng-repeat="game in games" value="{{game.name}}" aria-label="Game selection">
         {{game.name}}
       </md-option>
     </md-select>
 
     <label>Tournament Type</label>
-    <md-select ng-model="tournament.type">
+    <md-select ng-model="tournament.type" aria-label="type">
       <md-option ng-repeat="type in types" value="{{type.name}}" aria-label="Type selection">
         {{type.name}}
       </md-option>
