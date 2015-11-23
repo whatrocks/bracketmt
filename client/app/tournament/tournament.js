@@ -12,11 +12,11 @@ angular.module('bracketmt.tournament', [])
   $scope.numberRounds = 0;
   
   // Bracket visualization
-  $scope.circles = [4,5,6,7,8,9,10];
+  // $scope.circles = [4,5,6,7,8,9,10];
 
-  $scope.getCircles = function() {
-    return $scope.circles;
-  };
+  // $scope.getCircles = function() {
+  //   return $scope.circles;
+  // };
 
   // $scope.getTheData = function(circlecount) {
   //     // Generate an array of sequential numbers.
@@ -72,7 +72,7 @@ angular.module('bracketmt.tournament', [])
         var counter = 1;
         for ( var i = 0; i < participants.length; i++ ) {
           if (participants[i].TournamentId === $scope.tournament.id) {
-            $scope.circles.push(counter);
+            // $scope.circles.push(counter);
             counter++;
             $scope.participants.push(participants[i]);
           }
@@ -128,14 +128,14 @@ angular.module('bracketmt.tournament', [])
   };
 
 
-  $scope.generateMatch = function () {
+  $scope.generateBracket = function () {
 
     // for each number of matches, generate a match
-    console.log("time to generate the matches in first round");
+    console.log("time to generate the bracket");
     // var numberMatchesInFirstRound = $scope.matchesInRound($scope.numberPlayers);
     // console.log("There will be this many matches in round one: ", numberMatchesInFirstRound);
    
-    Admin.generateMatch($scope.tournament)
+    Admin.generateBracket($scope.tournament)
       .then(function (data)  {
         console.log("I've created a match");
         console.log(data);

@@ -4,6 +4,6 @@ module.exports = function (app) {
 
   app.route('/')
     .get(MatchController.allMatches)
-    .post(MatchController.newMatch);
+    .post(MatchController.generateBracket);
 
 };

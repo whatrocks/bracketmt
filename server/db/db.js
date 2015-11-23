@@ -88,6 +88,7 @@ var Match = orm.define('Match', {
 });
 
 Match.belongsTo(Tournament);
+Match.belongsTo(Match, { as: 'Parent'});
 Match.belongsTo(User, { as: 'PlayerOne'});
 Match.belongsTo(User, { as: 'PlayerTwo'});
 Match.belongsTo(User, { as: 'Winner'});
@@ -123,13 +124,14 @@ Promise.all([
 //   // Types
 //   Type.findOrCreate({ where: { name: 'Single Elimination' } });
 
-//   // Test Users
-//   User.findOrCreate({ where: { first: 'Darth', last: 'Vader', email: 'anakin@skywalker.com', salt: '123', password: '456' } });
-//   User.findOrCreate({ where: { first: 'Luke', last: 'Skywalker', email: 'luke@skywalker.com', salt: '123', password: '456' } });
-//   User.findOrCreate({ where: { first: 'Han', last: 'Solo', email: 'han@falcon.org', salt: '123', password: '456'} });
-//   User.findOrCreate({ where: { first: 'Leia', last: 'Organa-Solo', email: 'leia@alderaan.net', salt: '123', password: '456'} });
+// });
 
-// })
+  // Test Users
+  // User.findOrCreate({ where: { first: 'Darth', last: 'Vader', email: 'anakin@skywalker.com', salt: '123', password: '456' } });
+  // User.findOrCreate({ where: { first: 'Luke', last: 'Skywalker', email: 'luke@skywalker.com', salt: '123', password: '456' } });
+  // User.findOrCreate({ where: { first: 'Han', last: 'Solo', email: 'han@falcon.org', salt: '123', password: '456'} });
+  // User.findOrCreate({ where: { first: 'Leia', last: 'Organa-Solo', email: 'leia@alderaan.net', salt: '123', password: '456'} });
+
 // .then(function(){
 //   // Test Tournament
 //   Tournament.findOrCreate({ where: { 
@@ -140,7 +142,6 @@ Promise.all([
 //     TypeId: 1,
 //     StatusId: 1
 //   } });
-// // TODO: add error catch  
 // });
 
 exports.User = User;
@@ -150,65 +151,3 @@ exports.Status = Status;
 exports.Tournament = Tournament;
 exports.Participant = Participant;
 exports.Match = Match;
-
-
-///////////////////////////////////////////////
-// Original direct SQL strings
-///////////////////////////////////////////////
-
-// var getUsers = function(callback) {
-//   var queryStr = "select * from users";
-//   connection.query(queryStr, function(err, results){
-//     callback(err, results);
-//   });
-// };
-
-// var checkStatus = function(shortname, callback) {
-//   var queryStr = "select id_status from tournaments where shortname ='" + shortname + "'";
-//   connection.query(queryStr, function(err, results){
-//     callback(err, JSON.stringify(results));
-//   });
-// };
-
-
-// getUsers(function(err, results){
-//   if (err) {
-//     console.log("error getting users");
-//   } else {
-//     console.log(JSON.stringify(results));
-//   }
-// });
-
-
-// // Add number of rounds to the 'tournaments' table
-
-// var generateMatches = function(callback) {
-
-//   // check if id_status is 'CLOSED'
-//   checkStatus('deathstarbeerpong', function(err, results){
-//     if (err) {
-//       console.log("error: ", err);
-//     }
-//     results = JSON.parse(results);
-//     console.log("results: ", results[0]);
-//     if (results[0].id_status !== 2) {
-//       console.log("The tournament is not ready to generate matches yet.");
-//     } else {
-//       // generate matches (count number of participants)
-//       console.log("Time to make the brackets!");
-//       console.log("Getting the players now...");
-
-//       var queryStr = "select * from participants where id_tournaments=1";
-//       connection.query(queryStr, function(err, results){
-//         if (err){
-//           console.log("error");
-//         } else {
-//           console.log(JSON.parse(JSON.stringify(results)));
-//         }
-//       });
-
-//     }
-//   });
-// };
-
-// generateMatches();

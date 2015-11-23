@@ -76,7 +76,7 @@ angular.module('bracketmt.services', [])
   // Matches
   ///////////////////////////////////////
 
-  var generateMatch = function(tournament) {
+  var generateBracket = function(tournament) {
     
     return $http({
       method: 'POST',
@@ -136,7 +136,7 @@ angular.module('bracketmt.services', [])
     getGames: getGames,
     getTypes: getTypes,
     getMatches: getMatches,
-    generateMatch: generateMatch
+    generateBracket: generateBracket
   };
 
 })

@@ -15,6 +15,8 @@ module.exports = {
     // Need to convert into their foreign keys
     var tournamentId = req.body.tournamentId;
     var userId = req.body.email;
+
+    console.log(req.body);
    
     db.User.findOne({ where: { email: userId }})
     .then(function(user){
