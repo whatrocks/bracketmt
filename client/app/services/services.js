@@ -4,6 +4,10 @@ angular.module('bracketmt.services', [])
 
   var tournamentShortname = "";
 
+  ///////////////////////////////////////
+  // Tournaments
+  ///////////////////////////////////////
+
   var createTournament = function(tournament) {
     
     return $http({
@@ -39,6 +43,22 @@ angular.module('bracketmt.services', [])
     });
 
   };
+  
+  var getTournaments = function() {
+
+    return $http({
+      method: 'GET',
+      url: 'api/tournaments/'
+    })
+    .then(function (resp){
+      return resp.data;
+    });
+
+  };
+
+  ///////////////////////////////////////
+  // Participants
+  ///////////////////////////////////////
 
   var getParticipants = function() {
 
@@ -52,17 +72,37 @@ angular.module('bracketmt.services', [])
 
   };
 
-  var getTournaments = function() {
+  ///////////////////////////////////////
+  // Matches
+  ///////////////////////////////////////
+
+  var generateMatch = function(tournament) {
+    
+    return $http({
+      method: 'POST',
+      url: '/api/matches/',
+      data: tournament
+    })
+    .then(function (resp){
+      return resp.data;
+    });
+  };
+
+  var getMatches = function() {
 
     return $http({
       method: 'GET',
-      url: 'api/tournaments/'
+      url: 'api/matches/'
     })
     .then(function (resp){
       return resp.data;
     });
 
   };
+
+  ///////////////////////////////////////
+  // Games and types
+  ///////////////////////////////////////
 
   var getGames = function() {
 
@@ -94,7 +134,9 @@ angular.module('bracketmt.services', [])
     getTournaments: getTournaments,
     getParticipants: getParticipants,
     getGames: getGames,
-    getTypes: getTypes
+    getTypes: getTypes,
+    getMatches: getMatches,
+    generateMatch: generateMatch
   };
 
 })

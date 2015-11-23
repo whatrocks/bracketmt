@@ -4,9 +4,10 @@ angular.module('bracketmt.tournament', [])
 
   $scope.tournament = {};
   $scope.participants = [];
+  $scope.matches = [];
   $scope.newParticipant = {};
 
-  // Metrics
+  // Metrics in the nav bar
   $scope.numberPlayers = 0;
   $scope.numberRounds = 0;
   
@@ -22,7 +23,9 @@ angular.module('bracketmt.tournament', [])
   //     $scope.theData = d3.range($scope.circlecount).map(function(i) { return (i + 1) * 5; });
   // };
 
-
+  ////////////////////////////////////////////////
+  // Nav bar metrics
+  ////////////////////////////////////////////////
   $scope.matchesInRound = function(numPlayers) {
     var matches = Math.round(numPlayers / 2);
     return matches;
@@ -46,6 +49,10 @@ angular.module('bracketmt.tournament', [])
     }
     return rounds;
   };
+
+  ////////////////////////////////////////////////
+  // Retrieve tournament details from DB
+  ////////////////////////////////////////////////
 
 
   $scope.getTournament = function() {
@@ -80,6 +87,24 @@ angular.module('bracketmt.tournament', [])
       });
   };
 
+  $scope.getMatches = function() {
+    Admin.getMatches(Admin.tournamentShortname)
+    .then(function (matches) {
+      for ( var i = 0; i < matches.length; i++ ) {
+        if ( matches[i].TournamentId === $scope.tournament.id ) {
+          $scope.matches.push(matches[i]);
+        }
+      }
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
+  };
+
+  ////////////////////////////////////////////////
+  // User actions
+  ////////////////////////////////////////////////
+
   $scope.joinTournament = function() {
 
     console.log("JOINING tournament"); 
@@ -102,8 +127,27 @@ angular.module('bracketmt.tournament', [])
       });
   };
 
-  // TODO: figure out how to start tournament
-  $scope.start = function () {};
+
+  $scope.generateMatch = function () {
+
+    // for each number of matches, generate a match
+    console.log("time to generate the matches in first round");
+    // var numberMatchesInFirstRound = $scope.matchesInRound($scope.numberPlayers);
+    // console.log("There will be this many matches in round one: ", numberMatchesInFirstRound);
+   
+    Admin.generateMatch($scope.tournament)
+      .then(function (data)  {
+        console.log("I've created a match");
+        console.log(data);
+        $scope.matches.push(data);
+      })
+      .catch(function (error) {
+        console.log("Error creating a match");
+        console.error(error);
+      });
+
+  };
+
 
   $scope.getTournament();
 

@@ -3,8 +3,8 @@
   
   <md-toolbar class="md-hue-2">
     <div class="md-toolbar-tools">
+  
       <span> <b> {{tournament.name}} </b></span>
-      <!-- fill up the space between left and right area -->
       <span flex></span>
       <span>{{tournament.Game.name}}</span>
       <span flex></span>
@@ -12,11 +12,9 @@
       <span flex></span>
       
       <form novalidate name="joinForm" ng-submit="joinTournament()">
-
         <md-button class="md-raised md-warn">Join</md-button>
-
       </form>   
-  
+    
     </div>
   </md-toolbar>
 
@@ -26,7 +24,6 @@
     <span><h2 class="md-title">{{numberRounds}} Rounds</h2></span>
     <span flex></span>
     <span><h2 class="md-title">Status: {{tournament.Status.name}}</h2></span>
-
   </md-data-table-toolbar>
 
   <md-data-table-container>
@@ -48,13 +45,19 @@
   </table>
 </md-data-table-container>
 
-  <form novalidate name="drawForm" ng-submit="getCircles()">
-
-    <md-button class="md-raised md-warn">Bracket Time</md-button>
-
+  <!-- List bracket view -->
+  <h3> List view </h3>
+  <form novalidate name="matchForm" ng-submit="generateMatch()">
+    <md-button class="md-raised md-warn">Create a match</md-button>
   </form> 
+  <div id="list-bracket">
+  </div>
 
-    
+
+  <!-- D3 test -->
+  <form novalidate name="drawForm" ng-submit="getCircles()">
+    <md-button class="md-raised md-warn">Bracket Time</md-button>
+  </form> 
   <bracket
       ng-init="getCircles()"
       data="circles">
