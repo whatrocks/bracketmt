@@ -19,7 +19,7 @@ module.exports = {
         user.comparePasswords(password, function(err, foundUser){
           if (foundUser) {
             var token = jwt.encode(user, 'secret');
-            res.json({token: token});            
+            res.json({token: token, email: email});            
           } else {
             return next(new Error("No user"));
         } 

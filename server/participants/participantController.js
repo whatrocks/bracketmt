@@ -21,7 +21,6 @@ module.exports = {
       userId = user.id; 
     })
       .then(function (){
-        console.log("NEXT STEP");
         db.Participant.findOrCreate( { where : {
           UserId: userId,
           TournamentId: tournamentId

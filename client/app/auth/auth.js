@@ -7,9 +7,11 @@ angular.module('bracketmt.auth', [])
   $scope.signin = function () {
 
     Auth.signin($scope.user)
-      .then(function (token) {
-        Auth.email = $scope.user.email;
-        $window.localStorage.setItem('com.bracketmt', token);
+      .then(function (data) {
+        $window.localStorage.setItem('email', data.email);
+        // $window.localStorage.setItem('first', first);
+        // $window.localStorage.setItem('last', last);
+        $window.localStorage.setItem('com.bracketmt', data.token);
         $state.go('nav.find');
         // $location.path('/nav/join');
       })
@@ -21,9 +23,11 @@ angular.module('bracketmt.auth', [])
   $scope.signup = function () {
     
     Auth.signup($scope.user)
-      .then(function (token) {
-        Auth.email = $scope.user.email;
-        $window.localStorage.setItem('com.bracketmt', token);
+      .then(function (data) {
+        $window.localStorage.setItem('email', data.email);
+        // $window.localStorage.setItem('first', first);
+        // $window.localStorage.setItem('last', last);
+        $window.localStorage.setItem('com.bracketmt', data.token);
         $state.go('nav.find');
         // $location.path('/create');
       })

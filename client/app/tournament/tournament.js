@@ -1,6 +1,6 @@
 angular.module('bracketmt.tournament', [])
 
-.controller('TournamentController', function ($scope, $state, $location, Auth, Admin) {
+.controller('TournamentController', function ($scope, $state, $location, $window, Auth, Admin) {
 
   $scope.tournament = {};
   $scope.participants = [];
@@ -41,7 +41,9 @@ angular.module('bracketmt.tournament', [])
         roundCounter(matches);
       }
     };
-    roundCounter(numPlayers);
+    if ( numPlayers ) {
+      roundCounter(numPlayers);
+    }
     return rounds;
   };
 
@@ -83,7 +85,7 @@ angular.module('bracketmt.tournament', [])
     console.log("JOINING tournament"); 
     $scope.participants = [];
     $scope.newParticipant.tournamentId = $scope.tournament.id;
-    $scope.newParticipant.email = Auth.email;
+    $scope.newParticipant.email = $window.localStorage.getItem('email');
 
     Admin.joinTournament($scope.newParticipant)
       .then(function (data) {

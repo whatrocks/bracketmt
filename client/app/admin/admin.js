@@ -42,7 +42,7 @@ angular.module('bracketmt.admin', [])
     Admin.tournamentShortname = $scope.tournament.shortname;
 
     console.log("creating tournament"); 
-    $scope.tournament.email = Auth.email;
+    $scope.tournament.email = $window.localStorage.getItem('email');
     $scope.tournament.status = "Upcoming";
 
     Admin.createTournament($scope.tournament)

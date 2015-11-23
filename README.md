@@ -1,2 +1,2 @@
 # bracketmt
-instant tournament brackets!
+instant tournament brackets

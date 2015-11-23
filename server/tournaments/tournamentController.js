@@ -6,8 +6,6 @@ module.exports = {
     db.Tournament.findOne( { where : {shortname: shortname}})
       .then(function (tournament) {
         if (tournament) {
-          // console.log("!!!!!!!!!!");
-          // console.log(tournament.dataValues.shortname);
           req.shortname = tournament.dataValues.shortname;
           next();
         } else {
