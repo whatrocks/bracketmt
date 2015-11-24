@@ -13,80 +13,85 @@ module.exports = {
 
   generateBracket: function(req, res, next) {
     
-    var numPlayers = 0;
+    // RESET
+    // db.Tournament.find( { where: { shortname: req.body.shortname } })
+    //   .then(function (tournament) {
+    //     tournament.StatusId = 1;
+    //     tournament.save();
+    // });
 
-    // count the number of players in the tournament
-    db.Participant.findAll( { where: {TournamentId: req.body.id} })
-    .then (function(participants) {
-      numPlayers = participants.length;
-      console.log("number of players: ", numPlayers);
+    // ACTUAL
+    var status;
 
-      var numRounds = logic.numberOfRounds(numPlayers);
-      console.log("number of Rounds: ", numRounds);
+    db.Tournament.find( { where: { shortname: req.body.shortname } })
+      .then(function (tournament) {
+        status = tournament.StatusId;
+        console.log("status is: ", status);
+      })
+      .then(function (tournament) {
 
-      // Create match for finalRound
-      db.Match.findOrCreate( { where : {
-        TournamentId: req.body.id,
-        round: numRounds,
-        StatusId: 1
-        }})
-        .then(function (createdMatch){
+        if ( status === 1 ) {
 
-          var parentId = createdMatch[0].dataValues.id;
-          console.log("created the final match with id: ", parentId);
+          var numPlayers = 0;
+          // count the number of players in the tournament
+          db.Participant.findAll( { where: {TournamentId: req.body.id} })
+          .then (function(participants) {
+            numPlayers = participants.length;
+            console.log("number of players: ", numPlayers);
 
-          // Create the other rounds recursively !!
-          // Loop through each round in the tournament
-          var recursiveChildMatches = function(round, parentId) {
-            
-            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            var numRounds = logic.numberOfRounds(numPlayers);
+            console.log("number of Rounds: ", numRounds);
 
-            if ( round === 0 ) {
-              return;
-            }
+            var recursiveChildMatches = function(round, parentId) {
+              
+              if ( round === 0 ) {
+                return;
+              }
 
-            db.Match.create( {
-              TournamentId: req.body.id,
-              round: round,
-              StatusId: 1,
-              ParentId: parentId,
-              PlayerOneId: null,
-              PlayerTwoId: null,
-              WinnerId: null
-            })
-            .then(function (createdMatch) {
-              console.log("Created a match");
-              console.log("createdMatch is: ", createdMatch);
-              Promise.all([
-                recursiveChildMatches(round - 1, createdMatch.dataValues.id),
-                recursiveChildMatches(round - 1, createdMatch.dataValues.id)
-              ]);
-            })
-            .catch(function (error) {
-              console.error(error);
+              db.Match.create( {
+                TournamentId: req.body.id,
+                round: round,
+                StatusId: 1,
+                ParentId: parentId,
+                PlayerOneId: null,
+                PlayerTwoId: null,
+                WinnerId: null
+              })
+              .then(function (createdMatch) {
+                console.log("Created a match");
+                console.log("createdMatch is: ", createdMatch);
+                Promise.all([
+                  recursiveChildMatches(round - 1, createdMatch.dataValues.id),
+                  recursiveChildMatches(round - 1, createdMatch.dataValues.id)
+                ]);
+              })
+              .catch(function (error) {
+                console.error(error);
+              });
+            };
+
+            recursiveChildMatches(numRounds, null);                
+          })
+          .then(function () {
+
+            db.Tournament.find( { where: { shortname: req.body.shortname } })
+              .then(function (tournament) {
+                tournament.StatusId = 2;
+                tournament.save();
             });
 
-          };
+          })
+          .then(function () {
 
-          recursiveChildMatches(numRounds - 1, parentId);
+            // pack the matches with participants
 
-          
-          // ONCE THIS IS DONE, SEND BACK ALL THE MATCHES IN THAT TOURNAMENT AS THE RESPONSE JSON
-          // if (createdMatch){
-          //   res.json(createdMatch);
-          // }
-
-        })
-        .catch(function (error){
-          next(error);
-        });
-
-
-    })
-    .catch(function() {
-      console.error(error);
-    });
-   
+          })
+          .catch(function() {
+            console.error(error);
+          });
+        }
+      });
+    
   },
 
   addPlayerToMatch: function (req, res, next) {
