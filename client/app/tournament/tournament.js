@@ -6,6 +6,7 @@ angular.module('bracketmt.tournament', [])
   $scope.participants = [];
   $scope.matches = [];
   $scope.newParticipant = {};
+  $scope.rounds = [];
 
   // Metrics in the nav bar
   $scope.numberPlayers = 0;
@@ -80,7 +81,11 @@ angular.module('bracketmt.tournament', [])
         }
         $scope.numberPlayers = counter - 1;
         $scope.numberRounds = $scope.numberOfRounds($scope.numberPlayers);
+        for ( var j = 0; j < $scope.numberRounds; j++) {
+          $scope.rounds.push("Round: " + (j + 1));
+        }
         // console.log($scope.circles);
+        // console.log($scope.rounds);
 
       })
       .catch(function (error){
