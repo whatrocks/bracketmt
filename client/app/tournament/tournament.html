@@ -54,7 +54,9 @@
   <div layout="row">
     <div flex ng-repeat="round in rounds">
       
-      <md-list ng-repeat="match in matches">
+      
+
+      <md-list ng-if="round === match.round" ng-repeat="match in matches">
         <md-list-item>
           <!-- <img alt="{{ person.name }}" ng-src="{{ person.img }}" class="md-avatar" /> -->
            <!-- <md-icon md-svg-icon="alarm" style="color: #0F0;" aria-label="Alarm Icon"></md-icon> -->

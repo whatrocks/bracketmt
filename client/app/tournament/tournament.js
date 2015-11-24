@@ -82,7 +82,7 @@ angular.module('bracketmt.tournament', [])
         $scope.numberPlayers = counter - 1;
         $scope.numberRounds = $scope.numberOfRounds($scope.numberPlayers);
         for ( var j = 0; j < $scope.numberRounds; j++) {
-          $scope.rounds.push("Round: " + (j + 1));
+          $scope.rounds.push((j + 1));
         }
         // console.log($scope.circles);
         // console.log($scope.rounds);
