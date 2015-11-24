@@ -50,22 +50,14 @@ module.exports = {
         { model: db.User, as: 'PlayerTwo' }
         ]})
         .then(function(matches){
+          console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+          // console.log(matches);
           res.send(200, matches);
         });
       });
 
     });
 
-
-    // db.Match.find({include: [
-    //   db.Tournament, 
-    //   { model: db.User, as: 'Winner' },
-    //   { model: db.User, as: 'PlayerOne' },
-    //   { model: db.User, as: 'PlayerTwo' }
-    // ]})
-    // .then(function(matches){
-    //   res.send(200, matches);
-    // });
   },
 
   generateBracket: function(req, res, next) {

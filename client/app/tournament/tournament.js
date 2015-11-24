@@ -140,10 +140,9 @@ angular.module('bracketmt.tournament', [])
 
     Admin.updateMatch(match, winner, matchIndex)
       .then(function (data) {
-
-        console.log("data is: ", data);
         $scope.matches = [];
-        $scope.matches.push(data);
+        $scope.getMatches();
+        // $scope.matches.push(data);
       })
       .catch(function (error) {
         console.log("error adding the winner");

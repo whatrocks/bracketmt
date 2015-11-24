@@ -2,3 +2,7 @@ md-list-item {
   border: 1px solid grey !important;
   background-color: #AFEEEE
 }
+
+.winRound {
+  font-weight: bold;
+}

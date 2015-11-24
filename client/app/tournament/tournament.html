@@ -55,13 +55,21 @@
     <div flex ng-repeat="round in rounds" layout="column" layout-align="center">
       
       <md-list ng-if="round === match.round" ng-repeat="match in matches">
+        
         <md-list-item>
           <!-- <img alt="{{ person.name }}" ng-src="{{ person.img }}" class="md-avatar" /> -->
            <!-- <md-icon md-svg-icon="alarm" style="color: #0F0;" aria-label="Alarm Icon"></md-icon> -->
-          <p ng-click="winRound(match, match.PlayerOne)">{{match.PlayerOne.first}} {{match.PlayerOne.last}}</p>
+          
+          <p ng-click="winRound(match, match.PlayerOne)" ng-class="{ 'winRound' : match.PlayerOneId === match.WinnerId }">
+          
+           {{match.PlayerOne.first}} {{match.PlayerOne.last}}
+          </p>
         </md-list-item>
+        
         <md-list-item>
-          <p ng-click="winRound(match, match.PlayerTwo)">{{match.PlayerTwo.first}} {{match.PlayerTwo.last}}</p>
+          <p ng-click="winRound(match, match.PlayerTwo)" ng-class="{ 'winRound' : match.PlayerTwoId === match.WinnerId }">
+          {{match.PlayerTwo.first}} {{match.PlayerTwo.last}}
+          </p>
         </md-list-item>
       </md-list>
   
