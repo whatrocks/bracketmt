@@ -1,6 +1,8 @@
 md-list-item {
   border: 1px solid grey !important;
-  background-color: #AFEEEE
+  background-color: #AFEEEE;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .winRound {

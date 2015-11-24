@@ -88,9 +88,9 @@ angular.module('bracketmt.services', [])
     });
   };
 
-  var updateMatch = function(match, winner, matchIndex) {
+  var updateMatch = function(match, winner, matchIndex, rounds) {
     
-    var data = [match, winner, matchIndex];
+    var data = [match, winner, matchIndex, rounds];
 
     return $http({
       method: 'PUT',

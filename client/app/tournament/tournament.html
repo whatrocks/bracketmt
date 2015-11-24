@@ -26,7 +26,8 @@
     <span><h2 class="md-title">Status: {{tournament.Status.name}}</h2></span>
   </md-data-table-toolbar>
 
-  <md-data-table-container>
+<!-- Participant Data Table: Could be useful during initial "Upcoming" stage -->
+<!--   <md-data-table-container>
   <table md-data-table md-progress="deferred">
     <thead md-order="query.order" md-trigger="onOrderChange">
       <tr>
@@ -43,10 +44,9 @@
       </tr>
     </tbody>
   </table>
-</md-data-table-container>
+</md-data-table-container> -->
 
   <!-- List bracket view -->
-  <h3> Bracket View </h3>
   <form novalidate name="matchForm" ng-submit="generateBracket()">
     <md-button class="md-raised md-warn">Generate the brackets</md-button>
   </form>
@@ -57,11 +57,8 @@
       <md-list ng-if="round === match.round" ng-repeat="match in matches">
         
         <md-list-item>
-          <!-- <img alt="{{ person.name }}" ng-src="{{ person.img }}" class="md-avatar" /> -->
-           <!-- <md-icon md-svg-icon="alarm" style="color: #0F0;" aria-label="Alarm Icon"></md-icon> -->
           
           <p ng-click="winRound(match, match.PlayerOne)" ng-class="{ 'winRound' : match.PlayerOneId === match.WinnerId }">
-          
            {{match.PlayerOne.first}} {{match.PlayerOne.last}}
           </p>
         </md-list-item>
@@ -72,21 +69,11 @@
           </p>
         </md-list-item>
       </md-list>
-  
+
     </div>
   </div>
 
   <div id="list-bracket" ng-model="matches">
   </div>
-
-
-  <!-- D3 test -->
-<!--   <form novalidate name="drawForm" ng-submit="getCircles()">
-    <md-button class="md-raised md-warn">Bracket Time</md-button>
-  </form> 
-  <bracket
-      ng-init="getCircles()"
-      data="circles">
-  </bracket> -->
 
 </div>

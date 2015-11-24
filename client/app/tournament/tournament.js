@@ -138,11 +138,13 @@ angular.module('bracketmt.tournament', [])
     var matchIndex = $scope.matches.indexOf(match);
     console.log("Match index: ", matchIndex);
 
-    Admin.updateMatch(match, winner, matchIndex)
+    var roundCount = $scope.numberRounds;
+    console.log("roundCount is: ", roundCount);
+
+    Admin.updateMatch(match, winner, matchIndex, roundCount)
       .then(function (data) {
         $scope.matches = [];
         $scope.getMatches();
-        // $scope.matches.push(data);
       })
       .catch(function (error) {
         console.log("error adding the winner");
@@ -150,6 +152,7 @@ angular.module('bracketmt.tournament', [])
       });
 
   };
+
 
   ////////////////////////////////////////////////
   // Page load

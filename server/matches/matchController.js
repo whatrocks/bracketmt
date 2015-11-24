@@ -18,43 +18,73 @@ module.exports = {
 
   updateMatch: function(req, res, next) {
 
+    // If the tournament is completed
+      // you can't do anything anymore
+    // otherwise you can update the stuff
+
     var updateMatch = req.body[0];
     var updateWinner = req.body[1];
     var matchIndex = req.body[2];
+    var numberRounds = req.body[3];
+
+    console.log(numberRounds);
 
     return db.Match.find( { where: { id: updateMatch.id } })
     .then(function (match) {
       match.WinnerId = updateWinner.id;
       match.save();
 
-      //Once the winner is selected, then it needs to go into the parent match
-      return db.Match.find( { where: { id: match.ParentId } })
-      .then(function (nextMatch) {
+      // if final round
+      if ( match.round === numberRounds ) {
+        // update tournament
+        // then you need to update the state of the tournament to COMPLETED
+        // and set the tournament winner to the person's name
 
-        console.log("matchIndex is: ", matchIndex);
+        console.log("It's the final round");
 
-        if ( matchIndex % 2 !== 0 ) {
-          nextMatch.PlayerOneId = match.WinnerId;
-          nextMatch.save();
-        } else {
-          nextMatch.PlayerTwoId = match.WinnerId;
-          nextMatch.save();
-        }
-
-      })
-      .then(function(){
-        return db.Match.findAll({include: [
-        db.Tournament, 
-        { model: db.User, as: 'Winner' },
-        { model: db.User, as: 'PlayerOne' },
-        { model: db.User, as: 'PlayerTwo' }
-        ]})
-        .then(function(matches){
-          console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-          // console.log(matches);
-          res.send(200, matches);
+        return db.Tournament.find( { where: { id: match.TournamentId } })
+        .then(function (tournament) { 
+          tournament.StatusId = 3;
+          tournament.save();
+        })
+        .then(function(){
+          res.send(200);
         });
-      });
+
+
+
+      } else {
+
+        //Once the winner is selected, then it needs to go into the parent match
+        return db.Match.find( { where: { id: match.ParentId } })
+        .then(function (nextMatch) {
+
+          console.log("matchIndex is: ", matchIndex);
+
+          if ( matchIndex % 2 !== 0 ) {
+            nextMatch.PlayerOneId = match.WinnerId;
+            nextMatch.save();
+          } else {
+            nextMatch.PlayerTwoId = match.WinnerId;
+            nextMatch.save();
+          }
+
+        })
+        .then(function(){
+          return db.Match.findAll({include: [
+          db.Tournament, 
+          { model: db.User, as: 'Winner' },
+          { model: db.User, as: 'PlayerOne' },
+          { model: db.User, as: 'PlayerTwo' }
+          ]})
+          .then(function(matches){
+            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            // console.log(matches);
+            res.send(200, matches);
+          });
+        });
+        
+      }
 
     });
 
