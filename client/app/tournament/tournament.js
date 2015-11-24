@@ -11,18 +11,6 @@ angular.module('bracketmt.tournament', [])
   // Metrics in the nav bar
   $scope.numberPlayers = 0;
   $scope.numberRounds = 0;
-  
-  // Bracket visualization
-  // $scope.circles = [4,5,6,7,8,9,10];
-
-  // $scope.getCircles = function() {
-  //   return $scope.circles;
-  // };
-
-  // $scope.getTheData = function(circlecount) {
-  //     // Generate an array of sequential numbers.
-  //     $scope.theData = d3.range($scope.circlecount).map(function(i) { return (i + 1) * 5; });
-  // };
 
   ////////////////////////////////////////////////
   // Nav bar metrics
@@ -74,7 +62,6 @@ angular.module('bracketmt.tournament', [])
         var counter = 1;
         for ( var i = 0; i < participants.length; i++ ) {
           if (participants[i].TournamentId === $scope.tournament.id) {
-            // $scope.circles.push(counter);
             counter++;
             $scope.participants.push(participants[i]);
           }
@@ -84,8 +71,6 @@ angular.module('bracketmt.tournament', [])
         for ( var j = 0; j < $scope.numberRounds; j++) {
           $scope.rounds.push((j + 1));
         }
-        // console.log($scope.circles);
-        // console.log($scope.rounds);
 
       })
       .catch(function (error){
@@ -125,7 +110,6 @@ angular.module('bracketmt.tournament', [])
       .then(function (data) {
         console.log("I've joined a tournament");
         $scope.getParticipants();
-        // $state.go('nav.tournament');
       })
       .catch(function (error){
         console.log("Did not join the tournament");
