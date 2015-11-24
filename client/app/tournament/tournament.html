@@ -49,8 +49,13 @@
   <h3> Bracket View </h3>
   <form novalidate name="matchForm" ng-submit="generateBracket()">
     <md-button class="md-raised md-warn">Generate the brackets</md-button>
-  </form> 
-  <div id="list-bracket">
+  </form>
+
+  <div id="list-bracket" ng-model="matches">
+    <ul ng-repeat="match in matches">
+      <li> {{match.PlayerOne.first}} {{match.PlayerOne.last}}</li>
+      <li> {{match.PlayerTwo.first}} {{match.PlayerTwo.last}} </li>
+    </ul>
   </div>
 
 

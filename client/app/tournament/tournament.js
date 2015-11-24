@@ -60,6 +60,7 @@ angular.module('bracketmt.tournament', [])
       .then(function (tournament){
         $scope.tournament = tournament;
         $scope.getParticipants();
+        $scope.getMatches();
       })
       .catch(function (error){
         console.error(error);
@@ -129,11 +130,6 @@ angular.module('bracketmt.tournament', [])
 
 
   $scope.generateBracket = function () {
-
-    // for each number of matches, generate a match
-    console.log("time to generate the bracket");
-    // var numberMatchesInFirstRound = $scope.matchesInRound($scope.numberPlayers);
-    // console.log("There will be this many matches in round one: ", numberMatchesInFirstRound);
    
     Admin.generateBracket($scope.tournament)
       .then(function (data)  {

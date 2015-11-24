@@ -5,7 +5,12 @@ module.exports = {
 
   allMatches: function(req, res, next) {
 
-    db.Match.findAll({include: [db.Tournament]})
+    db.Match.findAll({include: [
+      db.Tournament, 
+      { model: db.User, as: 'Winner' },
+      { model: db.User, as: 'PlayerOne' },
+      { model: db.User, as: 'PlayerTwo' }
+    ]})
     .then(function(matches){
       res.send(200, matches);
     });
