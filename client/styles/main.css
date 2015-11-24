@@ -1,7 +1,4 @@
 md-list-item {
-  border: 1px solid red !important;
-}
-
-.round {
-  background-color: blue;
+  border: 1px solid grey !important;
+  background-color: #AFEEEE
 }

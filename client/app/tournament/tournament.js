@@ -43,7 +43,6 @@ angular.module('bracketmt.tournament', [])
   // Retrieve tournament details from DB
   ////////////////////////////////////////////////
 
-
   $scope.getTournament = function() {
     Admin.getTournament(Admin.tournamentShortname)
       .then(function (tournament){
@@ -132,6 +131,30 @@ angular.module('bracketmt.tournament', [])
       });
 
   };
+
+  $scope.winRound = function(match, winner) {
+
+    // If the match is odd, then it should go in PlayerOne
+    var matchIndex = $scope.matches.indexOf(match);
+    console.log("Match index: ", matchIndex);
+
+    Admin.updateMatch(match, winner, matchIndex)
+      .then(function (data) {
+
+        console.log("data is: ", data);
+        $scope.matches = [];
+        $scope.matches.push(data);
+      })
+      .catch(function (error) {
+        console.log("error adding the winner");
+        console.error(error);
+      });
+
+  };
+
+  ////////////////////////////////////////////////
+  // Page load
+  ////////////////////////////////////////////////
 
 
   $scope.getTournament();

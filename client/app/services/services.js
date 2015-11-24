@@ -88,6 +88,20 @@ angular.module('bracketmt.services', [])
     });
   };
 
+  var updateMatch = function(match, winner, matchIndex) {
+    
+    var data = [match, winner, matchIndex];
+
+    return $http({
+      method: 'PUT',
+      url: '/api/matches/',
+      data: data
+    })
+    .then(function (resp){
+      return resp.data;
+    });
+  };
+
   var getMatches = function() {
 
     return $http({
@@ -97,7 +111,6 @@ angular.module('bracketmt.services', [])
     .then(function (resp){
       return resp.data;
     });
-
   };
 
   ///////////////////////////////////////
@@ -136,7 +149,8 @@ angular.module('bracketmt.services', [])
     getGames: getGames,
     getTypes: getTypes,
     getMatches: getMatches,
-    generateBracket: generateBracket
+    generateBracket: generateBracket,
+    updateMatch: updateMatch
   };
 
 })

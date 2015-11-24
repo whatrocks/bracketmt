@@ -16,6 +16,58 @@ module.exports = {
     });
   },
 
+  updateMatch: function(req, res, next) {
+
+    var updateMatch = req.body[0];
+    var updateWinner = req.body[1];
+    var matchIndex = req.body[2];
+
+    return db.Match.find( { where: { id: updateMatch.id } })
+    .then(function (match) {
+      match.WinnerId = updateWinner.id;
+      match.save();
+
+      //Once the winner is selected, then it needs to go into the parent match
+      return db.Match.find( { where: { id: match.ParentId } })
+      .then(function (nextMatch) {
+
+        console.log("matchIndex is: ", matchIndex);
+
+        if ( matchIndex % 2 !== 0 ) {
+          nextMatch.PlayerOneId = match.WinnerId;
+          nextMatch.save();
+        } else {
+          nextMatch.PlayerTwoId = match.WinnerId;
+          nextMatch.save();
+        }
+
+      })
+      .then(function(){
+        return db.Match.findAll({include: [
+        db.Tournament, 
+        { model: db.User, as: 'Winner' },
+        { model: db.User, as: 'PlayerOne' },
+        { model: db.User, as: 'PlayerTwo' }
+        ]})
+        .then(function(matches){
+          res.send(200, matches);
+        });
+      });
+
+    });
+
+
+    // db.Match.find({include: [
+    //   db.Tournament, 
+    //   { model: db.User, as: 'Winner' },
+    //   { model: db.User, as: 'PlayerOne' },
+    //   { model: db.User, as: 'PlayerTwo' }
+    // ]})
+    // .then(function(matches){
+    //   res.send(200, matches);
+    // });
+  },
+
   generateBracket: function(req, res, next) {
     
     // RESET
