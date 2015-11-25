@@ -131,7 +131,7 @@ module.exports = {
               WinnerId: null
             })
             .then(function (createdMatch) {
-              return Promise.all([
+              Promise.all([
                 recursiveChildMatches(round - 1, createdMatch.dataValues.id),
                 recursiveChildMatches(round - 1, createdMatch.dataValues.id)
               ]);

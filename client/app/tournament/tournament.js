@@ -134,10 +134,13 @@ angular.module('bracketmt.tournament', [])
 
     // If the match is odd, then it should go in PlayerOne
     var matchIndex = $scope.matches.indexOf(match);
-    console.log("Match index: ", matchIndex);
+    // console.log("Match index: ", matchIndex);
 
     var roundCount = $scope.numberRounds;
-    console.log("roundCount is: ", roundCount);
+    // console.log("roundCount is: ", roundCount);
+
+    console.log(match.id);
+    console.log(match.ParentId);
 
     Admin.updateMatch(match, winner, matchIndex, roundCount)
       .then(function (data) {

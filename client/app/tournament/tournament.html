@@ -52,12 +52,16 @@
   </form>
 
   <div layout="row">
-    <div flex ng-repeat="round in rounds" layout="column" layout-align="center">
+    <div flex ng-repeat="round in rounds " layout="column" layout-align="center">
       
-      <md-list ng-if="round === match.round" ng-repeat="match in matches" class="matchup">
+      <md-list ng-if="round === match.round" ng-repeat="match in matches | orderBy: '-ParentId':true " class="matchup">
         
+
         <md-list-item>
-          
+        <p>
+        <!-- <span>Match id: {{match.id}}</span> -->
+        <span>Match Parent.id: {{match.ParentId}}</span>
+        </p>
           <p ng-click="winRound(match, match.PlayerOne)" ng-class="{ 'winRound' : match.PlayerOneId === match.WinnerId }">
            {{match.PlayerOne.first}} {{match.PlayerOne.last}}
           </p>
