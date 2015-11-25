@@ -47,7 +47,10 @@ angular.module('bracketmt.tournament', [])
     Admin.getTournament(Admin.tournamentShortname)
       .then(function (tournament){
         $scope.tournament = tournament;
-        $scope.getParticipants();
+        return $scope.getParticipants();
+      })
+      .then(function () {
+        return $scope.getMatches();
       })
       .catch(function (error){
         console.error(error);
@@ -69,6 +72,7 @@ angular.module('bracketmt.tournament', [])
         for ( var j = 0; j < $scope.numberRounds; j++) {
           $scope.rounds.push((j + 1));
         }
+        console.log("matches: ", $scope.matches);
       })
       .catch(function (error){
         console.error(error);
@@ -78,6 +82,7 @@ angular.module('bracketmt.tournament', [])
   $scope.getMatches = function() {
     Admin.getMatches(Admin.tournamentShortname)
     .then(function (matches) {
+      $scope.matches = [];
       for ( var i = 0; i < matches.length; i++ ) {
         if ( matches[i].TournamentId === $scope.tournament.id ) {
           $scope.matches.push(matches[i]);
@@ -139,12 +144,9 @@ angular.module('bracketmt.tournament', [])
     var roundCount = $scope.numberRounds;
     // console.log("roundCount is: ", roundCount);
 
-    console.log(match.id);
-    console.log(match.ParentId);
-
     Admin.updateMatch(match, winner, matchIndex, roundCount)
       .then(function (data) {
-        $scope.matches = [];
+        // $scope.matches = [];
         $scope.getMatches();
       })
       .catch(function (error) {
@@ -161,6 +163,5 @@ angular.module('bracketmt.tournament', [])
 
 
   $scope.getTournament();
-  $scope.getMatches();
 
 });

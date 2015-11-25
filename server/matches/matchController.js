@@ -90,6 +90,69 @@ module.exports = {
 
   },
 
+  createMatch: function (round, parentId, tournamentId) {
+
+    if (round === 0) {
+      return;
+    }
+
+    return db.Match.create( {
+      TournamentId: tournamentId,
+      round: round,
+      StatusId: 1,
+      ParentId: parentId,
+      PlayerOneId: null,
+      PlayerTwoId: null,
+      WinnerId: null
+    });
+
+  },
+
+  createMatchRecursively: function (round, parentId, tournamentId) {
+
+    var matchArray = [];
+
+    if (round === 0) {
+      return;
+    }
+
+    return Promise.all([
+      db.Match.create( {
+        TournamentId: tournamentId,
+        round: round,
+        StatusId: 1,
+        ParentId: parentId,
+        PlayerOneId: null,
+        PlayerTwoId: null,
+        WinnerId: null
+      }),
+
+      db.Match.create( {
+        TournamentId: tournamentId,
+        round: round,
+        StatusId: 1,
+        ParentId: parentId,
+        PlayerOneId: null,
+        PlayerTwoId: null,
+        WinnerId: null
+      })
+    ])
+    .then(function (matches) {
+
+      console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      console.log(matches);
+      console.log("##############################################");
+
+      for ( var i = 0; i < matches.length; i++ ) {
+        module.exports.createMatchRecursively(round - 1, matches[i].dataValues.id, tournamentId );
+      }
+    
+    });
+
+  },
+
+
+
   generateBracket: function(req, res, next) {
     
     // RESET
@@ -100,55 +163,65 @@ module.exports = {
       // });
 
     // ACTUAL
-
-    var tournamentId;
-
-    return db.Tournament.find( { where: { shortname: req.body.shortname } })
-    .then(function (tournament) {
-
-      tournamentId = tournament.id;
+    var tournamentId = req.body.id;
+    var tournamentStatus = req.body.StatusId;
+    var numRounds = 0;
+ 
+    if ( tournamentStatus === 1 ) {
       
-      if ( tournament.StatusId === 1 ) {
-        var numPlayers = 0;
-
-        return db.Participant.findAll( { where: {TournamentId: tournamentId} })
+      // Get all the participants in this tournament
+      return db.Participant.findAll( { where: {TournamentId: tournamentId} })
         .then (function(participants) {
-          numPlayers = participants.length;
 
-          var numRounds = logic.numberOfRounds(numPlayers);
+          var playerCount = participants.length;
 
-          var recursiveChildMatches = function(round, parentId) {  
-            if ( round === 0 ) {
-              return;
-            }
-            return db.Match.create( {
-              TournamentId: req.body.id,
-              round: round,
-              StatusId: 1,
-              ParentId: parentId,
-              PlayerOneId: null,
-              PlayerTwoId: null,
-              WinnerId: null
-            })
-            .then(function (createdMatch) {
-              Promise.all([
-                recursiveChildMatches(round - 1, createdMatch.dataValues.id),
-                recursiveChildMatches(round - 1, createdMatch.dataValues.id)
-              ]);
-            });
-          }; 
-          return recursiveChildMatches(numRounds, null);
+          // calculate the number of rounds in tournament
+          numRounds = logic.numberOfRounds(playerCount);
+          console.log("There are x rounds: ", numRounds);
+
+          // Create the final match
+          return module.exports.createMatch(numRounds, null, tournamentId);
         })
+        .then(function (createdMatch) {
+
+          return module.exports.createMatchRecursively(numRounds - 1, createdMatch.id, tournamentId );
+
+        })
+
+          // // define a recursive function
+          // var recursiveChildMatches = function(round, parentId) {  
+          //   if ( round === 0 ) {
+          //     return;
+          //   }
+          //   return db.Match.create( {
+          //     TournamentId: req.body.id,
+          //     round: round,
+          //     StatusId: 1,
+          //     ParentId: parentId,
+          //     PlayerOneId: null,
+          //     PlayerTwoId: null,
+          //     WinnerId: null
+          //   })
+          //   .then(function (createdMatch) {
+          //     return Promise.all([
+          //       recursiveChildMatches(round - 1, createdMatch.dataValues.id),
+          //       recursiveChildMatches(round - 1, createdMatch.dataValues.id)
+          //     ]);
+          //   });
+          // }; 
+          // return recursiveChildMatches(numRounds, null);
+        // })
         .then(function () {
-          return db.Tournament.find( { where: { shortname: req.body.shortname } })
-            .then(function () {
+          
+          return db.Tournament.find( { where: { id: req.body.id } })
+            .then(function (tournament) {
               tournament.StatusId = 2;
               tournament.save();
           });
         })
         .then(function (tournament) {
-          // pack the first round matches with participants
-          
+
+          // pack the first round matches with participants          
           return db.Participant.findAll( { where: {TournamentId: tournamentId} })
           .then (function(participants) {
             var players = participants;
@@ -182,6 +255,7 @@ module.exports = {
                     });
                   } else {
                     matches[i].destroy();
+                    // Need to also destroy the parent
                   }
                 }
                 res.send(200, matches);
@@ -195,8 +269,7 @@ module.exports = {
           console.error(error);
           });
         });
-      }
-    });
+      } // close if statement
   },
 
   addPlayerToMatch: function (req, res, next) {
