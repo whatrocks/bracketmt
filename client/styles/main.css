@@ -1,10 +1,23 @@
+.bracket {
+  background-color: #f5f5f5;
+}
+
+body {
+ background-color: #f5f5f5; 
+}
+
 .matchup {
-  border: 1px solid grey !important;
-  background-color: #AFEEEE;
+  border: 1px solid #B6B6B6 !important;
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 10px;
   margin-top: 10px;
+  padding: 0px;
+  background-color: white;
+}
+
+md-list-item {
+  font-size: 14px;
 }
 
 .winRound {

@@ -47,6 +47,9 @@ angular.module('bracketmt.tournament', [])
     Admin.getTournament(Admin.tournamentShortname)
       .then(function (tournament){
         $scope.tournament = tournament;
+        return $scope.tournament;
+      })
+      .then(function() {
         return $scope.getParticipants();
       })
       .then(function () {
@@ -72,7 +75,6 @@ angular.module('bracketmt.tournament', [])
         for ( var j = 0; j < $scope.numberRounds; j++) {
           $scope.rounds.push((j + 1));
         }
-        console.log("matches: ", $scope.matches);
       })
       .catch(function (error){
         console.error(error);
@@ -80,6 +82,7 @@ angular.module('bracketmt.tournament', [])
   };
 
   $scope.getMatches = function() {
+
     Admin.getMatches(Admin.tournamentShortname)
     .then(function (matches) {
       $scope.matches = [];
@@ -88,6 +91,7 @@ angular.module('bracketmt.tournament', [])
           $scope.matches.push(matches[i]);
         }
       }
+      // return $scope.matches;
     })
     .catch(function (error) {
       console.error(error);
@@ -124,9 +128,8 @@ angular.module('bracketmt.tournament', [])
    
     Admin.generateBracket($scope.tournament)
       .then(function (data)  {
-        console.log("I've created a match");
-        console.log(data);
         $scope.matches.push(data);
+        return $scope.getTournament();
       })
       .catch(function (error) {
         console.log("Error creating a match");
@@ -139,14 +142,10 @@ angular.module('bracketmt.tournament', [])
 
     // If the match is odd, then it should go in PlayerOne
     var matchIndex = $scope.matches.indexOf(match);
-    // console.log("Match index: ", matchIndex);
-
     var roundCount = $scope.numberRounds;
-    // console.log("roundCount is: ", roundCount);
 
     Admin.updateMatch(match, winner, matchIndex, roundCount)
       .then(function (data) {
-        // $scope.matches = [];
         $scope.getMatches();
       })
       .catch(function (error) {
@@ -163,5 +162,6 @@ angular.module('bracketmt.tournament', [])
 
 
   $scope.getTournament();
+  // $scope.getMatches();
 
 });

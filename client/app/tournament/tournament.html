@@ -51,19 +51,18 @@
     <md-button class="md-raised md-warn">Generate the brackets</md-button>
   </form>
 
-  <div layout="row">
+  <div layout="row" class="bracket">
     <div flex ng-repeat="round in rounds" layout="column" layout-align="center">
       
-      <md-list ng-if="round === match.round" ng-repeat="match in matches" class="matchup">
-        
-
-        <md-list-item>
+      <md-list ng-if="round === match.round" ng-repeat="match in matches" class="matchup">   
+  
+        <md-list-item class="matchup-item">
           <p ng-click="winRound(match, match.PlayerOne)" ng-class="{ 'winRound' : match.PlayerOneId === match.WinnerId }">
            {{match.PlayerOne.first}} {{match.PlayerOne.last}}
           </p>
         </md-list-item>
         
-        <md-list-item>
+        <md-list-item class="matchup-item">
           <p ng-click="winRound(match, match.PlayerTwo)" ng-class="{ 'winRound' : match.PlayerTwoId === match.WinnerId }">
           {{match.PlayerTwo.first}} {{match.PlayerTwo.last}}
           </p>
