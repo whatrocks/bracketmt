@@ -131,8 +131,9 @@ module.exports = {
     return db.Tournament.find( { where: { id: tournamentId } })
     .then(function (tournament) {
       
-      if ( tournament.StatusId === 1) {
-      
+      // add the check for status of 1
+      if ( tournament.StatusId ) {
+        
         return Promise.all([
           db.Match.create( {
             TournamentId: tournamentId,
@@ -156,9 +157,13 @@ module.exports = {
         ])
         .then(function (matches) {
           return Promise.all([
-            module.exports.createMatchRecursively(round - 1, matches[0].dataValues.id, tournamentId ),
-            module.exports.createMatchRecursively(round - 1, matches[1].dataValues.id, tournamentId )
-          ]);
+            module.exports.createMatchRecursively(round - 1, matches[0].dataValues.id, tournamentId )
+          ])
+          .then(function() {
+            return Promise.all([
+              module.exports.createMatchRecursively(round - 1, matches[1].dataValues.id, tournamentId )
+            ]);
+          });
         });
       }
     });
@@ -221,36 +226,64 @@ module.exports = {
             
             var players = participants;
 
-            return db.Match.findAll( { where: { round: 1, tournamentId: tournamentId } })
+            return db.Match.findAll( { where: { tournamentId: tournamentId } })
             .then(function (matches) {
 
-                for ( var i = 0; i < matches.length; i++ ) {
+
+                var firstRoundMatches = [];
+                for (var k = 0; k < matches.length; k++ ) {
+                  if (matches[k].round === 1) {
+                    firstRoundMatches.push(matches[k]);
+                  }
+                }
+
+                for ( var i = 0; i < firstRoundMatches.length; i++ ) {
                   
                   var playerOne = null;
                   var playerTwo = null;
 
                   if ( players.length > 0 ) {
                     playerOne = players.shift();
-                    // matches[i].dataValues.PlayerOneId = playerOne.dataValues.UserId;
+                    // firstRoundMatches[i].dataValues.PlayerOneId = playerOne.dataValues.UserId;
                   }
 
                   if ( players.length > 0 ) {
                     playerTwo = players.shift();
-                    // matches[i].dataValues.PlayerTwoId = playerTwo.dataValues.UserId;
+                    // firstRoundMatches[i].dataValues.PlayerTwoId = playerTwo.dataValues.UserId;
                   }
 
                   if ( playerOne && playerTwo ) {                  
-                    matches[i].updateAttributes({ 
+                    firstRoundMatches[i].updateAttributes({ 
                       PlayerOneId: playerOne.dataValues.UserId,
                       PlayerTwoId: playerTwo.dataValues.UserId
                     });
                   } else if (playerOne || playerTwo ) {
-                    matches[i].updateAttributes({ 
+                    firstRoundMatches[i].updateAttributes({ 
                       PlayerOneId: playerOne.dataValues.UserId
                     });
                   } else {
-                    matches[i].destroy();
-                    // Need to also destroy the parent
+                    
+                    // trying to destroy parent ids
+                    // var count = matches.length;
+
+                    // for (var j = 0; j < count; j++ ) {
+                    //   if (matches[j].id === firstRoundMatches[i].ParentId ) {
+                    //     matches[j].destroy();
+                    //     break;
+                    //   }
+                    // }
+
+                    // DO THIS AS THE NEXT STAGE OF THE PROMISE
+
+                    // var parentId = firstRoundMatches[i].ParentId;
+                    // db.Match.find( { where: { id: parentId } })
+                    // .then(function(foundMatch) {
+                    //   if (foundMatch.PlayerOneId === null && foundMatch.PlayerTwoId === null) {
+                    //     foundMatch.destroy();
+                    //   }
+                    // });
+
+                    firstRoundMatches[i].destroy();
                   }
                 }
                 // res.send(200, matches);
