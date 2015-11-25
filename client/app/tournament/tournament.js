@@ -48,7 +48,6 @@ angular.module('bracketmt.tournament', [])
       .then(function (tournament){
         $scope.tournament = tournament;
         $scope.getParticipants();
-        $scope.getMatches();
       })
       .catch(function (error){
         console.error(error);
@@ -70,7 +69,6 @@ angular.module('bracketmt.tournament', [])
         for ( var j = 0; j < $scope.numberRounds; j++) {
           $scope.rounds.push((j + 1));
         }
-
       })
       .catch(function (error){
         console.error(error);
@@ -160,5 +158,6 @@ angular.module('bracketmt.tournament', [])
 
 
   $scope.getTournament();
+  $scope.getMatches();
 
 });

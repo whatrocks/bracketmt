@@ -138,7 +138,6 @@ module.exports = {
             });
           }; 
           return recursiveChildMatches(numRounds, null);
-
         })
         .then(function () {
           return db.Tournament.find( { where: { shortname: req.body.shortname } })
@@ -157,35 +156,40 @@ module.exports = {
             return db.Match.findAll( { where: { round: 1, tournamentId: tournamentId } })
             .then(function (matches) {
 
-              for ( var i = 0; i < matches.length; i++ ) {
-                
-                var playerOne = null;
-                var playerTwo = null;
+                for ( var i = 0; i < matches.length; i++ ) {
+                  
+                  var playerOne = null;
+                  var playerTwo = null;
 
-                if ( players.length > 0 ) {
-                  playerOne = players.shift();
-                  // matches[i].dataValues.PlayerOneId = playerOne.dataValues.UserId;
+                  if ( players.length > 0 ) {
+                    playerOne = players.shift();
+                    // matches[i].dataValues.PlayerOneId = playerOne.dataValues.UserId;
+                  }
+
+                  if ( players.length > 0 ) {
+                    playerTwo = players.shift();
+                    // matches[i].dataValues.PlayerTwoId = playerTwo.dataValues.UserId;
+                  }
+
+                  if ( playerOne && playerTwo ) {                  
+                    matches[i].updateAttributes({ 
+                      PlayerOneId: playerOne.dataValues.UserId,
+                      PlayerTwoId: playerTwo.dataValues.UserId
+                    });
+                  } else if (playerOne || playerTwo ) {
+                    matches[i].updateAttributes({ 
+                      PlayerOneId: playerOne.dataValues.UserId
+                    });
+                  } else {
+                    matches[i].destroy();
+                  }
                 }
-
-                if ( players.length > 0 ) {
-                  playerTwo = players.shift();
-                  // matches[i].dataValues.PlayerTwoId = playerTwo.dataValues.UserId;
-                }
-
-                if ( playerOne && playerTwo ) {                  
-                  matches[i].updateAttributes({ 
-                    PlayerOneId: playerOne.dataValues.UserId,
-                    PlayerTwoId: playerTwo.dataValues.UserId
-                  });
-                } else {
-                  matches[i].updateAttributes({ 
-                    PlayerOneId: playerOne.dataValues.UserId
-                  });
-                }
-              }
-
+                res.send(200, matches);
+            })
+            .catch(function (error) {
+              console.error(error);
             });
-          })
+        })
         .catch(function (error) {
           console.log("error packing the first round matches");
           console.error(error);

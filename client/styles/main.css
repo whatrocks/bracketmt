@@ -1,8 +1,10 @@
-md-list-item {
+.matchup {
   border: 1px solid grey !important;
   background-color: #AFEEEE;
   margin-left: 10px;
   margin-right: 10px;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .winRound {
