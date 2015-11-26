@@ -109,29 +109,27 @@ Promise.all([
 })
 .then(function(){
   Match.sync();
+})
+.then(function(){
+  return Status.findOrCreate({ where: { name: 'Upcoming' } });
+})
+.then(function(){
+  return Status.findOrCreate({ where: { name: 'In Progress' } });
+})
+.then(function(){
+  return Status.findOrCreate({ where: { name: 'Completed' } });
+})
+.then(function(){
+
+  // Games
+  Game.findOrCreate({ where: { name: 'Ping Pong' } });
+  Game.findOrCreate({ where: { name: 'Beer Pong' } });
+  Game.findOrCreate({ where: { name: '3x3 Basketball' } });
+
+  // Types
+  Type.findOrCreate({ where: { name: 'Single Elimination' } });
+
 });
-// .then(function(){
-//   return Status.findOrCreate({ where: { name: 'Upcoming' } });
-// })
-// .then(function(){
-//   return Status.findOrCreate({ where: { name: 'In Progress' } });
-// })
-// .then(function(){
-//   return Status.findOrCreate({ where: { name: 'Completed' } });
-// })
-// .then(function(){
-
-//   // Games
-//   Game.findOrCreate({ where: { name: 'Ping Pong' } });
-//   Game.findOrCreate({ where: { name: 'Beer Pong' } });
-//   Game.findOrCreate({ where: { name: '3x3 Basketball' } });
-
-//   // Statuses
-
-//   // Types
-//   Type.findOrCreate({ where: { name: 'Single Elimination' } });
-
-// });
 
   // Test Users
   // User.findOrCreate({ where: { first: 'Darth', last: 'Vader', email: 'anakin@skywalker.com', salt: '123', password: '456' } });
