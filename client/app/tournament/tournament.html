@@ -67,13 +67,12 @@
           {{match.PlayerTwo.first}} {{match.PlayerTwo.last}}
           </p>
         </md-list-item>
-        
-        <md-list-item ng-if="round === rounds.length">
-          <p> "Winner" </p>
-        </md-list-item>
-        
-
+          
       </md-list>
+      
+        <div ng-if="round === rounds.length">
+          <p class="winner"> {{tournament.Winner.first}} {{tournament.Winner.last}} </p>
+        </div>         
 
     </div>
   </div>

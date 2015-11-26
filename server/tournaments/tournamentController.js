@@ -18,7 +18,7 @@ module.exports = {
   },
 
   navToTournament: function (req, res, next) {
-    db.Tournament.findOne({ where : {shortname: req.shortname}, include: [db.Game, db.Status, db.Type]})
+    db.Tournament.find({ where : {shortname: req.shortname}, include: [db.Game, db.Status, db.Type, { model: db.User, as: 'Owner' }, { model: db.User, as: 'Winner' }]})
       .then(function (tournament) {
         res.send(200, tournament);
     });
@@ -26,7 +26,7 @@ module.exports = {
 
   allTournaments: function(req, res, next) {
 
-    db.Tournament.findAll({include: [db.Game, db.Status, db.Type]})
+    db.Tournament.findAll({include: [db.Game, db.Status, db.Type, { model: db.User, as: 'Owner' }, { model: db.User, as: 'Winner' }]})
     .then(function(tournaments){
       res.send(200, tournaments);
     });

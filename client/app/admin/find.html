@@ -14,7 +14,7 @@
         <th name="Game" order-by="name"></th>
         <th name="Type" order-by="name"></th>
         <th name="Status" order-by="name"></th>
-        <th numeric name="Owner Id" order-by="tournament.OwnerId"></th>
+        <th numeric name="Owner" order-by="tournament.OwnerId"></th>
       </tr>
     </thead>
     <tbody>
@@ -23,7 +23,7 @@
         <td>{{tournament.Game.name}}</td>
         <td>{{tournament.Type.name}}</td>
         <td>{{tournament.Status.name}}</td>
-        <td>{{tournament.OwnerId}}</td>
+        <td>{{tournament.Owner.first}} {{tournament.Owner.last}}</td>
       </tr>
     </tbody>
   </table>

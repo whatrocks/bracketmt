@@ -47,13 +47,12 @@ angular.module('bracketmt.tournament', [])
     Admin.getTournament(Admin.tournamentShortname)
       .then(function (tournament){
         $scope.tournament = tournament;
-        return $scope.tournament;
       })
       .then(function() {
-        return $scope.getParticipants();
+        $scope.getParticipants();
       })
       .then(function () {
-        return $scope.getMatches();
+        $scope.getMatches();
       })
       .catch(function (error){
         console.error(error);
@@ -144,9 +143,11 @@ angular.module('bracketmt.tournament', [])
     var matchIndex = $scope.matches.indexOf(match);
     var roundCount = $scope.numberRounds;
 
+    $scope.getTournament();
+
     Admin.updateMatch(match, winner, matchIndex, roundCount)
       .then(function (data) {
-        $scope.getMatches();
+        $scope.getTournament();
       })
       .catch(function (error) {
         console.log("error adding the winner");

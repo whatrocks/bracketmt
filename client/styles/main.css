@@ -23,3 +23,8 @@ md-list-item {
 .winRound {
   font-weight: bold;
 }
+
+.winner {
+  margin-left: 20px;
+  font-weight: bold;
+}

@@ -43,12 +43,14 @@ module.exports = {
         console.log("It's the final round");
 
         return db.Tournament.find( { where: { id: match.TournamentId } })
-        .then(function (tournament) { 
+        .then(function (tournament) {
+          console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+          tournament.WinnerId = match.WinnerId; 
           tournament.StatusId = 3;
           tournament.save();
         })
-        .then(function(){
-          res.send(200);
+        .then(function (tournament) {
+          res.status(200).send(tournament);
         });
 
 
@@ -59,6 +61,7 @@ module.exports = {
         return db.Match.find( { where: { id: match.ParentId } })
         .then(function (nextMatch) {
 
+          console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
           console.log("matchIndex is: ", matchIndex);
 
           if ( matchIndex % 2 !== 0 ) {
@@ -78,8 +81,6 @@ module.exports = {
           { model: db.User, as: 'PlayerTwo' }
           ]})
           .then(function(matches){
-            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            // console.log(matches);
             res.send(200, matches);
           });
         });

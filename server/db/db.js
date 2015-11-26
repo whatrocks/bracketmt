@@ -1,6 +1,6 @@
 var logic = require('./logic');
 var Sequelize = require('sequelize');
-var orm = new Sequelize('bracketmt', 'root', 'H0Y@');
+var orm = new Sequelize('wrackets', 'root', 'H0Y@');
 var Promise = require('bluebird');
 var bcrypt = require('bcrypt-nodejs');
 var SALT_WORK_FACTOR = 10;
@@ -73,6 +73,7 @@ var Tournament = orm.define('Tournament', {
 });
 
 Tournament.belongsTo(User, { as: 'Owner' });
+Tournament.belongsTo(User, { as: 'Winner' });
 Tournament.belongsTo(Game);
 Tournament.belongsTo(Type);
 Tournament.belongsTo(Status);
@@ -110,6 +111,15 @@ Promise.all([
   Match.sync();
 });
 // .then(function(){
+//   return Status.findOrCreate({ where: { name: 'Upcoming' } });
+// })
+// .then(function(){
+//   return Status.findOrCreate({ where: { name: 'In Progress' } });
+// })
+// .then(function(){
+//   return Status.findOrCreate({ where: { name: 'Completed' } });
+// })
+// .then(function(){
 
 //   // Games
 //   Game.findOrCreate({ where: { name: 'Ping Pong' } });
@@ -117,9 +127,6 @@ Promise.all([
 //   Game.findOrCreate({ where: { name: '3x3 Basketball' } });
 
 //   // Statuses
-//   Status.findOrCreate({ where: { name: 'Upcoming' } });
-//   Status.findOrCreate({ where: { name: 'In Progress' } });
-//   Status.findOrCreate({ where: { name: 'Completed' } });
 
 //   // Types
 //   Type.findOrCreate({ where: { name: 'Single Elimination' } });

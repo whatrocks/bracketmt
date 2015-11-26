@@ -30,6 +30,7 @@ angular.module('bracketmt.admin', [])
   $scope.getTournaments = function() {
     Admin.getTournaments()
       .then(function (tournaments){
+        console.log(tournaments);
         $scope.tournaments = tournaments;
       })
       .catch(function (error){
