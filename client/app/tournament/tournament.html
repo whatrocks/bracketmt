@@ -52,9 +52,9 @@
   </form>
 
   <div layout="row" class="bracket">
-    <div flex ng-repeat="round in rounds" layout="column" layout-align="center">
+    <div flex ng-repeat="round in rounds track by $index" layout="column" layout-align="center">
       
-      <md-list ng-if="round === match.round" ng-repeat="match in matches" class="matchup">   
+      <md-list ng-if="round === match.round" ng-repeat="match in matches track by $index" class="matchup">   
   
         <md-list-item class="matchup-item">
           <p ng-click="winRound(match, match.PlayerOne)" ng-class="{ 'winRound' : match.PlayerOneId === match.WinnerId }">

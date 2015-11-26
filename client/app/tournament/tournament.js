@@ -143,11 +143,14 @@ angular.module('bracketmt.tournament', [])
     var matchIndex = $scope.matches.indexOf(match);
     var roundCount = $scope.numberRounds;
 
-    $scope.getTournament();
-
     Admin.updateMatch(match, winner, matchIndex, roundCount)
       .then(function (data) {
-        $scope.getTournament();
+        $scope.getMatches();
+        // If it's the final match
+        if (match.round === $scope.numberRounds) {
+          $scope.tournament.Winner.first = winner.first;
+          $scope.tournament.Winner.last = winner.last;          
+        }
       })
       .catch(function (error) {
         console.log("error adding the winner");
