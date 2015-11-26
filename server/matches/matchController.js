@@ -132,7 +132,7 @@ module.exports = {
     .then(function (tournament) {
       
       // add the check for status of 1
-      if ( tournament.StatusId ) {
+      if ( tournament.StatusId === 1 ) {
         
         return Promise.all([
           db.Match.create( {
@@ -229,6 +229,7 @@ module.exports = {
             return db.Match.findAll( { where: { tournamentId: tournamentId } })
             .then(function (matches) {
 
+                var abandonedParents = [];
 
                 var firstRoundMatches = [];
                 for (var k = 0; k < matches.length; k++ ) {
@@ -273,20 +274,46 @@ module.exports = {
                     //   }
                     // }
 
-                    // DO THIS AS THE NEXT STAGE OF THE PROMISE
-
-                    // var parentId = firstRoundMatches[i].ParentId;
+                    var parentId = firstRoundMatches[i].ParentId;
+                    abandonedParents.push(parentId);
+                    // var count = matches.length;
+                    // for (var j = 0; j < count; j++ ) {
+                    //   if (matches[j].id === firstRoundMatches[i].ParentId ) {
+                    //     matches[j].destroy();
+                    //     break;
+                    //   }
+                    // }
+                    
                     // db.Match.find( { where: { id: parentId } })
                     // .then(function(foundMatch) {
-                    //   if (foundMatch.PlayerOneId === null && foundMatch.PlayerTwoId === null) {
                     //     foundMatch.destroy();
-                    //   }
+                    //   });
                     // });
 
                     firstRoundMatches[i].destroy();
                   }
+
+                  // // don't remove parents that actually have children
+                  // for (var l = 0; l < abandonedParents.length; i++) {
+                  //   if ( abandonedParents[l].id === firstRoundMatches[i].ParentId) {
+                  //     abandonedParents = abandonedParents.splice(j, 1);
+                  //   }
+                  // }
+
                 }
-                // res.send(200, matches);
+
+                // remove the abandoned parents
+                // for (var o = 0; o < abandonedParents.length; o++) {
+
+                //   db.Match.find( { where: {id: abandonedParents[o].id }})
+                //   .then(function(match) {
+                //     match.destroy();
+                //   });
+
+                // } 
+
+                // send the results
+                res.send(200, matches);
             })
             .catch(function (error) {
               console.error(error);
