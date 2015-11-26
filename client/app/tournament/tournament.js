@@ -128,7 +128,7 @@ angular.module('bracketmt.tournament', [])
     Admin.generateBracket($scope.tournament)
       .then(function (data)  {
         $scope.matches.push(data);
-        return $scope.getTournament();
+        $scope.getTournament();
       })
       .catch(function (error) {
         console.log("Error creating a match");
@@ -151,6 +151,7 @@ angular.module('bracketmt.tournament', [])
           $scope.tournament.Winner.first = winner.first;
           $scope.tournament.Winner.last = winner.last;          
         }
+        return $scope.tournament;
       })
       .catch(function (error) {
         console.log("error adding the winner");
