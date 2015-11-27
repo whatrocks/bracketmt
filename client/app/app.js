@@ -3,8 +3,6 @@ angular.module('bracketmt', [
   'bracketmt.auth',
   'bracketmt.admin',
   'bracketmt.tournament',
-  'bracketmt.directives',
-  'nvd3ChartDirectives',
   'ui.router',
   'ngMaterial',
   'md.data.table'

@@ -2,11 +2,11 @@ FROM node:5
 
 COPY . /src
 
-RUN cd /src; npm install
-RUN cd
-RUN cd /src/client; bower install
-RUN cd
-RUN cd /src
+RUN npm install --silent -g bower
+
+# Build src
+RUN cd /src && npm install
+RUN cd /src/client && bower --allow-root install
 
 EXPOSE 7777
 
