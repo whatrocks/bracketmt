@@ -11,9 +11,13 @@
       <span>{{tournament.Type.name}}</span>
       <span flex></span>
       
-      <form novalidate name="joinForm" ng-submit="joinTournament()">
+      <form novalidate ng-if="tournament.StatusId === 1" name="joinForm" ng-submit="joinTournament()">
         <md-button class="md-raised md-warn">Join</md-button>
-      </form>   
+      </form>
+
+      <form novalidate name="matchForm" ng-model="isOwner" ng-if="isOwner" ng-submit="generateBracket()">
+        <md-button class="md-raised md-warn">Start</md-button>
+      </form>
     
     </div>
   </md-toolbar>
@@ -47,9 +51,9 @@
 </md-data-table-container>
 
   <!-- List bracket view -->
-  <form novalidate name="matchForm" ng-submit="generateBracket()">
+<!--   <form novalidate name="matchForm" ng-submit="generateBracket()">
     <md-button class="md-raised md-warn">Generate the brackets</md-button>
-  </form>
+  </form> -->
 
   <div layout="row" class="bracket">
     <div flex ng-repeat="round in rounds" layout="column" layout-align="center">

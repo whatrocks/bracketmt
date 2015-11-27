@@ -12,6 +12,9 @@ angular.module('bracketmt.tournament', [])
   $scope.numberPlayers = 0;
   $scope.numberRounds = 0;
 
+  // Admin flag
+  $scope.isOwner = false;
+
   ////////////////////////////////////////////////
   // Nav bar metrics
   ////////////////////////////////////////////////
@@ -47,6 +50,13 @@ angular.module('bracketmt.tournament', [])
     Admin.getTournament(Admin.tournamentShortname)
       .then(function (tournament){
         $scope.tournament = tournament;
+        if ( $window.localStorage.getItem('email') === $scope.tournament.Owner.email ) {
+          $scope.isOwner = true;
+        } else {
+          $scope.isOwner = false;
+        }
+        console.log($scope.tournament.Owner.email);
+        console.log($window.localStorage.getItem('email'));
       })
       .then(function() {
         $scope.getParticipants();
