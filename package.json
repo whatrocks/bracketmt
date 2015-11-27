@@ -9,6 +9,7 @@
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "^3.0.5",
     "body-parser": "^1.14.1",
+    "bower": "^1.6.8",
     "crypto": "0.0.3",
     "express": "^4.13.3",
     "jwt-simple": "^0.3.1",
