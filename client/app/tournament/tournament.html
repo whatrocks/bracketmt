@@ -30,7 +30,7 @@
     <span><h2 class="md-title">Status: {{tournament.Status.name}}</h2></span>
   </md-data-table-toolbar>
 
-<!-- Participant Data Table: Could be useful during initial "Upcoming" stage -->
+<!-- Participant Data Table -->
   <md-data-table-container ng-if="tournament.StatusId === 1">
   <table md-data-table md-progress="deferred">
     <thead md-order="query.order" md-trigger="onOrderChange">
@@ -50,11 +50,7 @@
   </table>
 </md-data-table-container>
 
-  <!-- List bracket view -->
-<!--   <form novalidate name="matchForm" ng-submit="generateBracket()">
-    <md-button class="md-raised md-warn">Generate the brackets</md-button>
-  </form> -->
-
+  <!-- Bracket view -->
   <div layout="row" class="bracket">
     <div flex ng-repeat="round in rounds" layout="column" layout-align="center">
       
@@ -80,8 +76,5 @@
 
     </div>
   </div>
-<!-- 
-  <div id="list-bracket" ng-model="matches">
-  </div> -->
 
 </div>
