@@ -102,13 +102,13 @@ Promise.all([
   Status.sync()
 ])
 .then(function(){
-  Tournament.sync();
+  return Tournament.sync();
 })
 .then(function(){
-  Participant.sync();
+  return Participant.sync();
 })
 .then(function(){
-  Match.sync();
+  return Match.sync();
 })
 .then(function(){
   return Status.findOrCreate({ where: { name: 'Upcoming' } });
@@ -130,24 +130,6 @@ Promise.all([
   Type.findOrCreate({ where: { name: 'Single Elimination' } });
 
 });
-
-  // Test Users
-  // User.findOrCreate({ where: { first: 'Darth', last: 'Vader', email: 'anakin@skywalker.com', salt: '123', password: '456' } });
-  // User.findOrCreate({ where: { first: 'Luke', last: 'Skywalker', email: 'luke@skywalker.com', salt: '123', password: '456' } });
-  // User.findOrCreate({ where: { first: 'Han', last: 'Solo', email: 'han@falcon.org', salt: '123', password: '456'} });
-  // User.findOrCreate({ where: { first: 'Leia', last: 'Organa-Solo', email: 'leia@alderaan.net', salt: '123', password: '456'} });
-
-// .then(function(){
-//   // Test Tournament
-//   Tournament.findOrCreate({ where: { 
-//     name: 'Death Star Pong',
-//     shortname: 'deathstarpong',
-//     OwnerId: 4,
-//     GameId: 2,
-//     TypeId: 1,
-//     StatusId: 1
-//   } });
-// });
 
 exports.User = User;
 exports.Game = Game;

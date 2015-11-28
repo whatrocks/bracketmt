@@ -20,7 +20,7 @@ module.exports = {
   navToTournament: function (req, res, next) {
     db.Tournament.find({ where : {shortname: req.shortname}, include: [db.Game, db.Status, db.Type, { model: db.User, as: 'Owner' }, { model: db.User, as: 'Winner' }]})
       .then(function (tournament) {
-        res.send(200, tournament);
+        res.status(200).send(tournament);
     });
   },
 
@@ -28,7 +28,7 @@ module.exports = {
 
     db.Tournament.findAll({include: [db.Game, db.Status, db.Type, { model: db.User, as: 'Owner' }, { model: db.User, as: 'Winner' }]})
     .then(function(tournaments){
-      res.send(200, tournaments);
+      res.status(200).send(tournaments);
     });
   },
 

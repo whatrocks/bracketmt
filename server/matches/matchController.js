@@ -12,7 +12,7 @@ module.exports = {
       { model: db.User, as: 'PlayerTwo' }
     ]})
     .then(function(matches){
-      res.send(200, matches);
+      res.status(200).send(matches);
     });
   },
 
@@ -44,7 +44,6 @@ module.exports = {
 
         return db.Tournament.find( { where: { id: match.TournamentId } })
         .then(function (tournament) {
-          console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
           tournament.WinnerId = match.WinnerId; 
           tournament.StatusId = 3;
           tournament.save();
@@ -81,7 +80,7 @@ module.exports = {
           { model: db.User, as: 'PlayerTwo' }
           ]})
           .then(function(matches){
-            res.send(200, matches);
+            res.status(200).send(matches);
           });
         });
         
@@ -208,7 +207,9 @@ module.exports = {
         })
         .then(function (createdMatch) {
 
-          return module.exports.createMatchRecursively(numRounds - 1, createdMatch.id, tournamentId );
+          if (numRounds > 1) {
+            return module.exports.createMatchRecursively(numRounds - 1, createdMatch.id, tournamentId );
+          }
         
         })
         .then(function () {
@@ -246,12 +247,10 @@ module.exports = {
 
                   if ( players.length > 0 ) {
                     playerOne = players.shift();
-                    // firstRoundMatches[i].dataValues.PlayerOneId = playerOne.dataValues.UserId;
                   }
 
                   if ( players.length > 0 ) {
                     playerTwo = players.shift();
-                    // firstRoundMatches[i].dataValues.PlayerTwoId = playerTwo.dataValues.UserId;
                   }
 
                   if ( playerOne && playerTwo ) {                  
@@ -265,56 +264,14 @@ module.exports = {
                     });
                   } else {
                     
-                    // trying to destroy parent ids
-                    // var count = matches.length;
-
-                    // for (var j = 0; j < count; j++ ) {
-                    //   if (matches[j].id === firstRoundMatches[i].ParentId ) {
-                    //     matches[j].destroy();
-                    //     break;
-                    //   }
-                    // }
-
-                    var parentId = firstRoundMatches[i].ParentId;
-                    abandonedParents.push(parentId);
-                    // var count = matches.length;
-                    // for (var j = 0; j < count; j++ ) {
-                    //   if (matches[j].id === firstRoundMatches[i].ParentId ) {
-                    //     matches[j].destroy();
-                    //     break;
-                    //   }
-                    // }
-                    
-                    // db.Match.find( { where: { id: parentId } })
-                    // .then(function(foundMatch) {
-                    //     foundMatch.destroy();
-                    //   });
-                    // });
-
+                    // var parentId = firstRoundMatches[i].ParentId;
+                    // abandonedParents.push(parentId);
                     firstRoundMatches[i].destroy();
                   }
 
-                  // // don't remove parents that actually have children
-                  // for (var l = 0; l < abandonedParents.length; i++) {
-                  //   if ( abandonedParents[l].id === firstRoundMatches[i].ParentId) {
-                  //     abandonedParents = abandonedParents.splice(j, 1);
-                  //   }
-                  // }
-
                 }
-
-                // remove the abandoned parents
-                // for (var o = 0; o < abandonedParents.length; o++) {
-
-                //   db.Match.find( { where: {id: abandonedParents[o].id }})
-                //   .then(function(match) {
-                //     match.destroy();
-                //   });
-
-                // } 
-
                 // send the results
-                res.send(200, matches);
+                res.status(200).status(matches);
             })
             .catch(function (error) {
               console.error(error);

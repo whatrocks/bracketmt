@@ -6,7 +6,7 @@ module.exports = {
 
     db.Participant.findAll({include: [db.Tournament, db.User]})
     .then(function(participants){
-      res.send(200, participants);
+      res.status(200).send(participants);
     });
   },
 

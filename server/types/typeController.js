@@ -6,7 +6,7 @@ module.exports = {
 
     db.Type.findAll()
     .then(function(types){
-      res.send(200, types);
+      res.status(200).send(types);
     });
   }
 

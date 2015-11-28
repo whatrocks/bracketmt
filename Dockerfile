@@ -10,4 +10,4 @@ RUN cd /src/client && bower --allow-root install
 
 EXPOSE 7777
 
-CMD ["node", "src/server/server.js"
+CMD ["node", "/bin/sh 'cd/src/server/server.js"]
