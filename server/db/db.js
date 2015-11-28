@@ -1,6 +1,12 @@
 var logic = require('./logic');
+var dbconfig = require('../config/dbconfig.js');
 var Sequelize = require('sequelize');
-var orm = new Sequelize('wrackets', 'root', 'H0Y@');
+
+var dbname = process.env.DB_NAME || dbconfig.development.database;
+var dbuser = process.env.DB_NAME || dbconfig.development.username;
+var dbpw = process.env.DB_USER || dbconfig.development.password;
+
+var orm = new Sequelize(dbname, dbuser, dbpw);
 var Promise = require('bluebird');
 var bcrypt = require('bcrypt-nodejs');
 var SALT_WORK_FACTOR = 10;
