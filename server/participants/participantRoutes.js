@@ -1,4 +1,4 @@
-var ParticipantController = require('./ParticipantController.js');
+var ParticipantController = require('./participantController.js');
 
 module.exports = function(app) {
 

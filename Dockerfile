@@ -1,13 +1,21 @@
-FROM node:5
+FROM node
 
-COPY . /src
+RUN mkdir app
+
+WORKDIR app
+
+ADD . /app/
 
 RUN npm install --silent -g bower
 
-# Build src
-RUN cd /src && npm install
-RUN cd /src/client && bower --allow-root install
+RUN npm install
+
+WORKDIR client
+
+RUN bower --allow-root install
+
+WORKDIR ..
 
 EXPOSE 7777
 
-CMD ["node", "src/server/server.js"]
+CMD ["node", "server/server.js"]

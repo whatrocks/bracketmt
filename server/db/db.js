@@ -2,11 +2,14 @@ var logic = require('./logic');
 var dbconfig = require('../config/dbconfig.js');
 var Sequelize = require('sequelize');
 
-var dbname = process.env.DB_NAME || dbconfig.development.database;
-var dbuser = process.env.DB_NAME || dbconfig.development.username;
-var dbpw = process.env.DB_USER || dbconfig.development.password;
+var dbname = dbconfig.production.database || dbconfig.development.database;
+var dbuser = dbconfig.production.username || dbconfig.development.username;
+var dbpw = dbconfig.production.password || dbconfig.development.password;
 
-var orm = new Sequelize(dbname, dbuser, dbpw);
+var orm = new Sequelize(dbname, dbuser, dbpw, {
+  host: dbconfig.production.host || dbconfig.development.host, 
+  port: dbconfig.production.port || dbconfig.development.port
+});
 var Promise = require('bluebird');
 var bcrypt = require('bcrypt-nodejs');
 var SALT_WORK_FACTOR = 10;
